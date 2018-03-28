@@ -1,0 +1,46 @@
+{% extends 'Base.html' %}
+
+{% block title %}修改队伍{% endblock %}
+
+{% block body %}
+    <div class="main">
+         <h3 class="page-title">修改队伍</h3>
+        <form action="" method="POST">
+            <div class="form-container">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="高校全称" name="school"  required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="参赛队名" name="teamname"  required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="指导老师" name="teacher"  required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="老师电话" name="teacherphone" required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="参赛队员1" name="member1" required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="队员电话" name="member1phone" required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="参赛队员2" name="member2" required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="队员电话" name="member2phone" required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="参赛队员3" name="member3" required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="队员电话" name="member3phone" required />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block">立即修改</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

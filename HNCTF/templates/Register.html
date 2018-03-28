@@ -1,0 +1,29 @@
+{% extends 'Base.html' %}
+
+{% block title %}注册{% endblock %}
+
+{% block body %}
+         <h3 class="page-title">注册</h3>
+        <form action="" method="POST">
+            <div class="form-container">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="高校全称" name="school"  required />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="老师姓名" name="teachername"  required />
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="老师电话" name="teacherphone"  required />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="密码" name="password" required />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="确认密码" name="repassword" required />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block">立即注册</button>
+                </div>
+            </div>
+        </form>
+{% endblock %}

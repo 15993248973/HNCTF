@@ -1,0 +1,19 @@
+{% extends 'Base.html' %}
+
+{% block body %}
+    <div>
+            <li>{{ teacher.teachername }}</li>
+            <li>{{ team.teamname }}</li>
+            <li>{{ team.teacher }}</li>
+            <li>{{ team.teacherphone }}</li>
+            <li>{{ team.member1 }}</li>
+            <li>{{ team.member1phone }}</li>
+            <li>{{ team.member2 }}</li>
+            <li>{{ team.member2phone }}</li>
+            <li>{{ team.member3 }}</li>
+            <li>{{ team.member3phone }}</li>
+        <a href="{{ url_for('MyTeam') }}">我的队伍</a>
+    </div>
+    <br>
+    {% block team %}{% endblock %}
+{% endblock %}
