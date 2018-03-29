@@ -73,11 +73,11 @@
                          <li><a href="#works">比赛规则</a></li>
                          <li><a href="#">图文直播</a></li>
 						 <li class="has-dropdown">
-                             <a href="#">信息</a>
+                             <a href="{{ url_for('RegisterTeam') }}">队伍报名</a>
 						 </li>
                          <li><a href="#facts">关于我们</a></li>
                          {% if teacher %}
-                             <li class="btn-cta"><a href="#"><span>个人中心</span></a></li>
+                             <li class="btn-cta"><a href="{{ url_for('MyPage') }}"><span>个人中心</span></a></li>
                              <li class="btn-cta"><a href="{{ url_for('Logout') }}"><span>注销</span></a></li>
                          {% else %}
 						     <li class="btn-cta"><a href="{{ url_for('Login') }}"><span>登录</span></a></li>

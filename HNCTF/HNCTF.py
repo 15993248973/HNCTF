@@ -11,7 +11,7 @@ from datetime import timedelta
 app = Flask(__name__)
 app.config.from_object(config)
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 db.init_app(app)
 
 
