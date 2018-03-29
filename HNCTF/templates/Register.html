@@ -1,24 +1,32 @@
 {% extends 'Base.html' %}
 
 {% block title %}注册{% endblock %}
-
+{% block head %}
+	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/Register.css') }}">
+{% endblock %}
 {% block body %}
-         <h3 class="page-title">注册</h3>
+	<div class="main">
+         <h1 class="page-title">注册</h1>
         <form action="" method="POST">
             <div class="form-container">
                 <div class="form-group">
+	                <span class="page">高校全称 :</span>
                     <input type="text" class="form-control" placeholder="高校全称" name="school"  required />
                 </div>
                 <div class="form-group">
+	                <span class="page">老师姓名 :</span>
                     <input type="text" class="form-control" placeholder="老师姓名" name="teachername"  required />
                 </div>
                 <div class="form-group">
+	                <span class="page">老师电话 :</span>
                     <input type="number" class="form-control" placeholder="老师电话" name="teacherphone"  required />
                 </div>
                 <div class="form-group">
+	                <span class="page">密码 :</span>
                     <input type="password" class="form-control" placeholder="密码" name="password" required />
                 </div>
                 <div class="form-group">
+	                <span class="page">确认密码 :</span>
                     <input type="password" class="form-control" placeholder="确认密码" name="repassword" required />
                 </div>
                 <div class="form-group">
@@ -26,4 +34,5 @@
                 </div>
             </div>
         </form>
+	</div>
 {% endblock %}

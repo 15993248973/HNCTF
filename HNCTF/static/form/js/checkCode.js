@@ -29,7 +29,7 @@ function validate(){
 		return false;
     }      
     else { //输入正确时
-        alert("^-^"); //弹出^-^
-    }          
 	return true;
+    }          
+
 }

@@ -46,6 +46,7 @@ class Team(db.Model):
 
     member3 = db.Column(db.String(100), nullable=False)
     member3phone = db.Column(db.String(11), nullable=False)
+
     user_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 
     user = db.relationship('Teacher', backref=db.backref('teams'))
