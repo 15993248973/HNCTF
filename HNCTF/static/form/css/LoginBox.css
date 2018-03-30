@@ -1,26 +1,19 @@
-.BodyBackground{
-    width: 100%;
-    height: 100%;
-    background-image:url(../img/banner3.jpg);
-    background-repeat:no-repeat;
-    background-size:cover;
-    overflow:hidden;
-}
+
 .main{
-    padding-top: 160px;
-    width:405px;
+    margin-top: 160px;
+    width:420px;
     margin-left: 550px;
+
 }
 
 .page-title{
-    text-align: center;
-    color: #00bddb;
+    color: #0080cb;
     font-family:Georgia, serif;
     font-weight: 900
 }
 .page{
     color: #00bddb;
-    font-size:20px
+    font-size:20px;
 }
 .form-group{
     width: 400px;
@@ -43,4 +36,23 @@
 #input{
     width: 250px;
     height: 35px;
+}
+
+body {
+    background:url('../img/bg2.jpg');
+    background-size: cover;
+    text-align: center;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.void{
+    height: 100px;
+}
+
+.LoginMain{
+    margin-top: 150px;
+    width: 420px;
+    margin-left: 600px;
+    background: beige;
+
 }
