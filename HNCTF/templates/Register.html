@@ -2,37 +2,122 @@
 
 {% block title %}注册{% endblock %}
 {% block head %}
-	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/Register.css') }}">
+    <link href="{{ url_for('static', filename='form/css/style.css') }}" rel="stylesheet" type="text/css" media="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Transparent Login Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+<!--web-fonts-->
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css' />
+
 {% endblock %}
 {% block body %}
-	<div class="main">
-         <h1 class="page-title">注册</h1>
-        <form action="" method="POST">
-            <div class="form-container">
-                <div class="form-group">
-	                <span class="page">高校全称 :</span>
-                    <input type="text" class="form-control" placeholder="高校全称" name="school"  required />
-                </div>
-                <div class="form-group">
-	                <span class="page">老师姓名 :</span>
-                    <input type="text" class="form-control" placeholder="老师姓名" name="teachername"  required />
-                </div>
-                <div class="form-group">
-	                <span class="page">老师电话 :</span>
-                    <input type="number" class="form-control" placeholder="老师电话" name="teacherphone"  required />
-                </div>
-                <div class="form-group">
-	                <span class="page">密码 :</span>
-                    <input type="password" class="form-control" placeholder="密码" name="password" required />
-                </div>
-                <div class="form-group">
-	                <span class="page">确认密码 :</span>
-                    <input type="password" class="form-control" placeholder="确认密码" name="repassword" required />
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block">立即注册</button>
-                </div>
-            </div>
-        </form>
+
+<div class="main-content-agile">
+	<div class="sub-main-w3">
+		<form action="#" method="post" id="registerForm">
+			<input placeholder="学校" name="school"  type="text" required=""><br><div class="school" style="color:#ee1615">学校名错误，请按要求输入</div>
+			<input placeholder="教师姓名" name="teachername"  type="text" required=""> <br><div class="teacher" style="color:#ee1615">教师姓名错误，请按要求输入</div>
+			<input placeholder="手机号" name="teacherphone"  type="text" required=""><br><div class="phone" style="color:#ee1615">手机号格式错误</div>
+			<input placeholder="密码" name="password"  type="password" required=""> <br><div class="password" style="color:#ee1615">密码必须是6-12位，由字母(a-z),数字(0-9)组成</div>
+			<input  placeholder="确认密码" name="repassword"  type="password" required=""><br> <div class="repassword" style="color: #ee1615">两次输入密码一致，请按要求输入</div>
+			<input type="submit" class="submit-btn" value="注册" onclick="firm()">
+			<a href="{{ url_for('Index') }}">返回</a>
+		</form>
 	</div>
+</div>
+
+    <script  src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script>
+  $(document).ready(function(){
+        var $inputEle=$("input[name]");
+        //页面加载时的input正常效果
+        $inputEle.addClass('normal');
+        //input元素获取焦点效果
+        function inputColor(input){
+            input.on('focus',function(e){
+                $(this).addClass('focus');
+            })
+        }
+        //将含有name属性的input元素添加获取焦点效果
+        inputColor($inputEle);
+        //校验各输入框的公有方法
+        function checkVal(flag,$input,$errorInfo){
+            if(!flag){
+                $input.addClass('error');
+                $errorInfo.show();
+                return false;
+            }
+            $input.addClass('normal');
+            $errorInfo.hide();
+            return true;
+        }
+        var regschool=/^([\u4e00-\u9fa5]+|([a-z]+\s?)+)$/;
+	    var regteacher=/^([\u4e00-\u9fa5]+|([a-z]+\s?)+)$/;
+	    var regphone=/^1[3|4|5|7|8][0-9]{9}$/;
+	    var regPsw=/^[a-z0-9]{6,12}$/i;
+        var $schoolErrorInfo=$('.school'),
+            $teacherErrorInfo=$('.teacher'),
+            $phoneErrorInfo=$('.phone'),
+            $passwordErrorInfo=$('.password'),
+          	$repasswordErrorInfo=$('.repassword');
+        var $school=$("input[name='school']"),
+            $teacher=$("input[name='teachername']"),
+            $phone=$("input[name='teacherphone']"),
+            $password=$("input[name='password']"),
+			$repassword=$("input[name='repassword']"),
+            $submitBtn=$("input[type='submit']");
+        //校验学校
+        $school.on('blur',function(e){
+            var userFlag=regschool.test($(this).val());
+            return checkVal(userFlag,$(this),$schoolErrorInfo);
+        });
+        //校验教师名称
+        $teacher.on('blur',function(e){
+            var pswFlag=regteacher.test($(this).val());
+            checkVal(pswFlag,$(this),$teacherErrorInfo);
+        });//检验密码
+         $password.on('blur',function(e){
+            var pswFlag=regPsw.test($(this).val());
+            checkVal(pswFlag,$(this),$passwordErrorInfo);
+        });
+        //校验确认密码
+        $repassword.on('blur',function(e){
+            var repswVal=$(this).val(),
+                pswVal=$password.val();
+            var repswFlag=(repswVal===pswVal);
+            checkVal(repswFlag,$(this),$repasswordErrorInfo);
+        });
+        //校验电话
+        $phone.on('blur',function(e){
+            var mailFlag=regphone.test($(this).val());
+            checkVal(mailFlag,$(this),$phoneErrorInfo);
+        });
+        //点击提交按钮
+        $submitBtn.on('click',function(e){
+            var schoolFlag=regschool.test($school.val()),
+                pswFlag=regPsw.test($password.val()),
+                repswFlag=($repassword.val()===$password.val()),
+                teacherFlag=regteacher.test($teacher.val());
+            	phoneFlag=regphone.test($phone.val());
+
+            var checkschoolResult=checkVal(schoolFlag,$school,$schoolErrorInfo),
+				checkteacherResult=checkVal(teacherFlag,$teacher,$teacherErrorInfo),
+                checkPswResult=checkVal(pswFlag,$password,$passwordErrorInfo),
+                checkRepswResult=checkVal(repswFlag,$repassword,$repasswordErrorInfo),
+                checkphoneResult=checkVal(phoneFlag,$phone,$phoneErrorInfo);
+            if(checkschoolResult && checkteacherResult&& checkPswResult && checkRepswResult &&  checkphoneResult){
+                $('#registerForm').submit();
+            }else{
+                e.preventDefault();
+            }
+        });
+
+    });
+    function firm() {
+    //利用对话框返回的值 （true 或者 false）
+    if (confirm("你确定注册吗？")) {
+    }
+  }
+</script>
 {% endblock %}
