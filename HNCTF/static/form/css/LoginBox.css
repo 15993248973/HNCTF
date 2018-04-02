@@ -9,7 +9,8 @@
 .main{
     padding-top: 160px;
     width:405px;
-    margin-left: 550px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .page-title{
@@ -24,8 +25,7 @@
 }
 .form-group{
     width: 400px;
-    margin: 10px;
-
+    margin: 3px;
     padding: 5px;
 }
 

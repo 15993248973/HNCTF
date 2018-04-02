@@ -1,19 +1,23 @@
 {% extends 'Base.html' %}
+{% block head %}
 
+	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/LoginBox.css') }}">
+    <script  src="{{ url_for('static', filename='form/js/checkCode.js') }}"></script>
+
+{% endblock %}
 {% block body %}
+	    <div class="" >
     <div>
-            <li>{{ teacher.teachername }}</li>
-            <li>{{ team.teamname }}</li>
-            <li>{{ team.teacher }}</li>
-            <li>{{ team.teacherphone }}</li>
-            <li>{{ team.member1 }}</li>
-            <li>{{ team.member1phone }}</li>
-            <li>{{ team.member2 }}</li>
-            <li>{{ team.member2phone }}</li>
-            <li>{{ team.member3 }}</li>
-            <li>{{ team.member3phone }}</li>
-        <a href="{{ url_for('MyTeam') }}">我的队伍</a>
+        <ul>
+	        <br>	        <br>	        <br>	        <br>	        <br>	        <br>
+	        <input type="text" value={{ teacher.teachername }} />
+	        <input type="text" value={{ teacher.teacherphone }} />
+	        <input type="text" value={{ teacher.password }} />
+	        <input type="text" value={{ teacher.school }} />
+	        <li><a href="{{ url_for('MyTeam') }}">我的队伍</a></li>
+	    </ul>
     </div>
     <br>
+	    </div>
     {% block team %}{% endblock %}
 {% endblock %}

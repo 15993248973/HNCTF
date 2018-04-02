@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
     <head>
-    	<!-- meta charec set -->
+	    <!-- meta charec set -->
         <meta charset="utf-8">
 		<!-- Always force latest IE rendering engine or request Chrome Frame -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -28,11 +28,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='home/css/main.css') }}">
 		<!-- media-queries -->
         <link rel="stylesheet" href="{{ url_for('static', filename='home/css/media-queries.css') }}">
-     
-
 		<!-- Modernizer Script for old Browsers -->
         <script src="{{ url_for('static', filename='home/js/modernizr-2.6.2.min.js') }}"></script>
-
     </head>
 
     <body id="body">
@@ -70,14 +67,26 @@
                      <ul  class="nav navbar-nav">
                          <li class="current"><a href="{{ url_for('Index') }}">主页</a></li>
                          <li><a href="#features">比赛时间</a></li>
-                         <li><a href="#works">比赛规则</a></li>
+                         <li><a href="#rule">比赛规则</a></li>
+	                     <li><a href="#works">赛前热身</a></li>
                          <li><a href="#">图文直播</a></li>
 						 <li class="has-dropdown">
-                             <a href="#">信息</a>
+                             <a href="#">竞赛通知</a>
 						 </li>
                          <li><a href="#facts">关于我们</a></li>
                          {% if teacher %}
-                             <li class="btn-cta"><a href="#"><span>个人中心</span></a></li>
+	                         <li class="dropdown">
+					              <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ teacher.teachername }}<b class="caret"></b> </a>
+				                <ul class="dropdown-menu page  ">
+						            <li ><a class=" pageword" href="{{ url_for('Profile') }}">个人中心</a></li>
+					                 <li><a class=" pageword" href="{{ url_for('RegisterTeam') }}">注册团队</a></li>
+						            <li><a class=" pageword" href="{{ url_for('AllMessage') }}">修改密码</a></li>
+{#						            <li role="separator" class="divider"></li>#}
+						            <li><a href="#">其他</a></li>
+{#						            <li role="separator" class="divider"></li>#}
+{#						            <li><a href="#">其他</a></li>#}
+				                </ul>
+				              </li>
                              <li class="btn-cta"><a href="{{ url_for('Logout') }}"><span>注销</span></a></li>
                          {% else %}
 						     <li class="btn-cta"><a href="{{ url_for('Login') }}"><span>登录</span></a></li>
@@ -112,10 +121,12 @@
             <div class="carousel-inner" role="listbox">
 
                 <!-- single slide -->
-                <div class="item active" style="background-image: url({{ url_for('static', filename='home/img/banner.jpg') }});">
+                <div class="item active" style="background-image: url({{ url_for('static', filename='home/img/banner3.jpg') }});">
                     <div class="carousel-caption">
-                        <h2 data-wow-duration="700ms" data-wow-delay="500ms" class="wow bounceInDown animated">河南省第三届HNCTF大赛</h2>
-                        <h3 data-wow-duration="1000ms" class="wow slideInLeft animated"><span class="color">中原工学院</span> 主办</h3>
+						 <h3 data-wow-duration="1000ms" class="wow slideInLeft animated">“安恒杯”</h3>
+                        <h2 data-wow-duration="700ms" data-wow-delay="500ms" class="wow bounceInDown animated">河南省第三届HNCTF2018大赛</h2>
+
+                        <h3 data-wow-duration="1000ms" class="wow slideInLeft animated"><a href="http://www.zut.edu.cn/"><span class="color">中原工学院</span></a> 主办</h3>
                         <p data-wow-duration="1000ms" class="wow slideInRight animated">We are a team of professionals</p>
 
 
@@ -124,10 +135,14 @@
                 <!-- end single slide -->
 
                 <!-- single slide -->
-                <div class="item" style="background-image: url({{ url_for('static', filename='home/img/banner2.jpg') }});">
+                <div class="item" style="background-image: url({{ url_for('static', filename='home/img/banner.jpg') }});">
                     <div class="carousel-caption">
-                        <h2 data-wow-duration="500ms" data-wow-delay="500ms" class="wow bounceInDown animated">河南省第三届HNCTF大赛</h2>
-                        <h3 data-wow-duration="500ms" class="wow slideInLeft animated"><span class="color">中原工学院</span> 主办</h3>
+                        <h2 data-wow-duration="500ms" data-wow-delay="500ms" class="wow bounceInDown animated">欢迎报名 第三届 安恒杯</h2>
+						<br>
+                        <h3 data-wow-duration="500ms" class="wow slideInLeft animated">中原工学院站
+	                        <a href="{{ url_for('RegisterTeam') }}"><span  class="color"> 前去报名</span> </a>
+                        </h3>
+	                    <br>
                         <p data-wow-duration="500ms" class="wow slideInRight animated">We are a team of professionals</p>
 
 
@@ -141,34 +156,25 @@
         </div>
     </section>
 
-    <!--
-    End Home SliderEnd
-    ==================================== -->
-
-    <!--
-    Features
-    ==================================== -->
-
     <section id="features" class="features">
         <div class="container">
             <div class="row">
 
                 <div class="sec-title text-center mb50 wow bounceInDown animated" data-wow-duration="500ms">
                     <h2>时间安排</h2>
-                    <div class="devider"><i class="fa fa-heart-o fa-lg"></i></div>
+                    <div class="devider"><i class="fa fa-clock-o fa-lg"></i></div>
                 </div>
 
                 <!-- service item -->
                 <div class="col-md-4 wow fadeInLeft" data-wow-duration="500ms">
                     <div class="service-item">
                         <div class="service-icon">
-                            <i class="fa fa-github fa-2x"></i>
+                            <i class="fa fa-clock-o fa-2x"></i>
                         </div>
 
                         <div class="service-desc">
-                            <h3>2018年6月27日</h3>
-                            <p>(1).9:00-10:00: 注册、设置和开场<br>(2). 10:00-12:00: 比赛<br>
-                                (3).12:00-13:00：午餐<br>(4).13:00-18:00: 比赛</p>
+                            <h3>2018年4月30日</h3>
+                            <p>(1).8：00 截止报名<br>(2).9：00-12：00 核对报名信息<br></p>
                         </div>
                     </div>
                 </div>
@@ -178,13 +184,13 @@
                 <div class="col-md-4 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms">
                     <div class="service-item">
                         <div class="service-icon">
-                            <i class="fa fa-pencil fa-2x"></i>
+                            <i class="fa fa-clock-o fa-2x"></i>
                         </div>
 
                         <div class="service-desc">
-                            <h3>2018年 6月28日</h3>
-                            <p>(1).9:00-10:00: 注册、设置和开场<br>(2). 10:00-12:00: 比赛<br>
-                                (3).12:00-13:00：午餐<br>(4).13:00-18:00: 比赛</p>
+                            <h3>2018年 5月5日</h3>
+                            <p>(1).9:00-10:00: 开幕式<br>(2). 10:00-10:20: 宣布比赛须知、比赛规则<br>
+                                (3).10:20-18:00：解题赛<br>(4).12:00-13:00: 午餐</p>
                         </div>
                     </div>
                 </div>
@@ -194,13 +200,13 @@
                 <div class="col-md-4 wow fadeInRight" data-wow-duration="500ms"  data-wow-delay="900ms">
                     <div class="service-item">
                         <div class="service-icon">
-                            <i class="fa fa-bullhorn fa-2x"></i>
+                            <i class="fa fa-clock-o fa-2x"></i>
                         </div>
 
                         <div class="service-desc">
-                            <h3>2018年 6月29日</h3>
-                            <p>(1).9:00-10:00: 注册、设置和开场<br>(2). 10:00-12:00: 比赛<br>
-                                (3).12:00-13:00：午餐<br>(4).13:00-18:00: 比赛</p>
+                            <h3>2018年 5月6日</h3>
+                            <p>(1).9:00-10:00: 宣布比赛须知、比赛规则<br>(2). 10:00-16:00: 对抗赛<br>
+                                (3).12:00-13:00：午餐<br>(4).16:00-18:00: 颁奖典礼、闭幕式</p>
                         </div>
                     </div>
                 </div>
@@ -219,17 +225,40 @@
     Our Works
     ==================================== -->
 
-    <section id="works" class="works clearfix">
+    <section id="rule" class="works clearfix">
         <div class="container">
-            <div class="row">
+            <div class="row1">
 
                 <div class="sec-title text-center">
                     <h2>比赛规则</h2>
                     <div class="devider"><i class="fa fa-heart-o fa-lg"></i></div>
                 </div>
-
                 <div class="sec-sub-title text-center">
                     <p> 请队员们遵守比赛规则</p>
+                </div>
+	            <div class="comment">
+
+		            <p>1)、  参赛选手建议自带笔记本电脑、电源、资料（包括书籍、电子资料）； </p><br>
+		            <p>2) 、 在比赛开始前签到，并提供有效证件（身份证和学生证）以核实身份信息； </p><br>
+		            <p>3) 、 比赛正式开始后迟到15分钟者不得进入比赛场地； </p><br>
+		            <p>4) 、 比赛期间不允许参赛者访问互联网，禁止以任何形式请求援助或交流比赛内容及过关攻略，含:QQ、微信、飞信等IM及手机、对讲机等通信设备 </p><br>
+		            <p>5) 、 遵守大赛纪律，不得在比赛场地内大声喧哗。 </p><br>
+		            <p>6) 、 禁止任何对比赛相关平台的暴力破解和攻击，违规者一律取消参资格；</p><br>
+		            <p>7) 、 禁止任何针对参赛对手的网络攻击行为，违规者一律取消参赛资格； </p><br>
+		            <p>8) 、 比赛过程中不能相互关流，禁止参赛选手之间分享任何解题思路及flag，违规者一律取消参赛资格；</p><br>
+		            <p>9) 、 使用网络扫描器（例如Nikto或者Nessus）不会对解题有帮助; </p><br>
+	            </div>
+            </div>
+        </div>
+    </section>
+
+		<section id="works" class="works clearfix">
+        <div class="container">
+            <div class="row">
+
+	            <div class="sec-title text-center">
+                    <h2>赛前热身</h2>
+                    <div class="devider"><i class="fa fa-heart-o fa-lg"></i></div>
                 </div>
 
                 <div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">

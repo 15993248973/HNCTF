@@ -11,7 +11,7 @@ from datetime import timedelta
 app = Flask(__name__)
 app.config.from_object(config)
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 db.init_app(app)
 
 
@@ -27,9 +27,73 @@ def Base():
 @app.route('/MyPage/')
 def MyPage():
     if g.teacher_id:
-        return render_template('MyPage.html')
+        return render_template('form.html')
     else:
         return redirect(url_for('Login'))
+
+@app.route('/AllMessage/')
+def AllMessage():
+    if g.teacher_id:
+        return render_template('AllMessage.html')
+    else:
+        return redirect(url_for('Login'))#
+#设置信息
+@app.route('/Setting/Basic/')
+def Basic():
+    if g.teacher_id:
+        return render_template('Basic.html')
+    else:
+        return redirect(url_for('Login'))#
+@app.route('/Setting/Profile/',methods=['GET','POST'])
+def Profile():
+    if g.teacher_id:
+        if request.method == 'GET':
+            return render_template('Profile.html')
+        else:
+            teachername = request.form.get('teachername')
+            teachersex = request.form.get('teachersex')
+            school = request.form.get('school')
+            teacherdepartment = request.form.get('teacherdepartment')
+            teacherjob = request.form.get('teacherjob')
+            teacherphone = request.form.get('teacherphone')
+            teacheremail = request.form.get('teacheremail')
+            teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+            teacher.teachersex = teachersex
+            teacher.school = school
+            teacher.teacherdepartment = teacherdepartment
+            teacher.teacherjob = teacherjob
+            teacher.teacherphone = teacherphone
+            teacher.teacheremail = teacheremail
+            print(teacherjob,teachername)
+            print(teacher)
+            db.session.commit()
+            return render_template('Profile.html')
+    else:
+        return redirect(url_for('Login'))#
+@app.route('/Setting/CreateTeam/')
+def CreateTeam():
+    if g.teacher_id:
+        return render_template('CreateTeam.html')
+    else:
+        return redirect(url_for('Login'))#
+@app.route('/Setting/FirstTeam/')
+def FirstTeam():
+    if g.teacher_id:
+        return render_template('FirstTeam.html')
+    else:
+        return redirect(url_for('Login'))#
+@app.route('/Setting/SecondTeam/')
+def SecondTeam():
+    if g.teacher_id:
+        return render_template('SecondTeam.html')
+    else:
+        return redirect(url_for('Login'))#
+@app.route('/Setting/ThirdTeam/')
+def ThirdTeam():
+    if g.teacher_id:
+        return render_template('ThirdTeam.html')
+    else:
+        return redirect(url_for('Login'))#
 
 
 @app.route('/MyTeam/')

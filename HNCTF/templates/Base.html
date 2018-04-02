@@ -67,19 +67,30 @@
 					<!-- /logo -->
                 </div>
 
-				<!-- main nav -->
-                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
+				 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                      <ul  class="nav navbar-nav">
                          <li class="current"><a href="{{ url_for('Index') }}">主页</a></li>
-                         <li><a href="{{ url_for('Index') }}">比赛时间</a></li>
-                         <li><a href="{{ url_for('Index') }}">比赛规则</a></li>
-                         <li><a href="#">图文直播</a></li>
+                         <li><a href="{{ url_for('Index') }}#features">比赛时间</a></li>
+                         <li><a href="{{ url_for('Index') }}#rule">比赛规则</a></li>
+	                     <li><a href="{{ url_for('Index') }}#works">赛前热身</a></li>
+                         <li><a href="{{ url_for('Index') }}#">图文直播</a></li>
 						 <li class="has-dropdown">
-                             <a href="#">信息</a>
+                             <a href="//#">竞赛通知</a>
 						 </li>
-                         <li><a href="{{ url_for('Index') }}">关于我们</a></li>
+                         <li><a href="{{ url_for('Index') }}#facts">关于我们</a></li>
                          {% if teacher %}
-                             <li class="btn-cta"><a href="#"><span>个人中心</span></a></li>
+	                         <li class="dropdown">
+					              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ teacher.teachername }}<b class="caret"></b> </a>
+				                <ul class="dropdown-menu page  ">
+						            <li ><a class=" pageword" href="{{ url_for('MyPage') }}">个人中心</a></li>
+					                 <li><a class=" pageword" href="{{ url_for('RegisterTeam') }}">注册团队</a></li>
+						            <li><a class=" pageword" href="{{ url_for('AllMessage') }}">修改密码</a></li>
+{#						            <li role="separator" class="divider"></li>#}
+						            <li><a href="#">其他</a></li>
+{#						            <li role="separator" class="divider"></li>#}
+{#						            <li><a href="#">其他</a></li>#}
+				                </ul>
+				              </li>
                              <li class="btn-cta"><a href="{{ url_for('Logout') }}"><span>注销</span></a></li>
                          {% else %}
 						     <li class="btn-cta"><a href="{{ url_for('Login') }}"><span>登录</span></a></li>
@@ -88,7 +99,6 @@
                      </ul>
 
                  </nav>
-				<!-- /main nav -->
 
             </div>
         </header>

@@ -28,11 +28,12 @@
                 </div>
                 <div class="form-group">
                    <button class="btn btn-primary btn-block"  >登录</button>
+	                <p> 还没帐号？去<a  href="{{ url_for('Regist') }}"> 注册</a></p>
                 </div>
                 {% for message in get_flashed_messages() %}
                 {{ message }}
                 {% endfor %}
-	        </div>>
+	        </div>
         </form>
     </div>
 

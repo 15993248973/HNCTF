@@ -11,6 +11,12 @@ class Teacher(db.Model):
     teachername = db.Column(db.String(100), nullable=False)
     teacherphone = db.Column(db.String(11), nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    teachersex = db.Column(db.String(100), nullable=True)
+    teacherdepartment = db.Column(db.String(100), nullable=True)
+    teacherjob = db.Column(db.String(100), nullable=True)
+    teacheremail = db.Column(db.String(100), nullable=True)
+    teacherroom = db.Column(db.String(100), nullable=True)
+
 
     #拦截用户数据
     def __init__(self,*args, **kwargs):
@@ -39,13 +45,28 @@ class Team(db.Model):
     teacherphone = db.Column(db.String(11), nullable=False)
 
     member1 = db.Column(db.String(100), nullable=False)
+    member1sex = db.Column(db.String(100), nullable=False)
+    member1grade = db.Column(db.String(100), nullable=False)
+    member1skill = db.Column(db.String(100), nullable=False)
+    member1size = db.Column(db.String(100), nullable=False)
     member1phone = db.Column(db.String(11), nullable=False)
+    member1email = db.Column(db.String(100), nullable=False)
 
     member2 = db.Column(db.String(100), nullable=False)
+    member2sex = db.Column(db.String(100), nullable=False)
+    member2grade = db.Column(db.String(100), nullable=False)
+    member2skill = db.Column(db.String(100), nullable=False)
+    member2size = db.Column(db.String(100), nullable=False)
     member2phone = db.Column(db.String(11), nullable=False)
+    member2email = db.Column(db.String(100), nullable=False)
 
     member3 = db.Column(db.String(100), nullable=False)
+    member3sex = db.Column(db.String(100), nullable=False)
+    member3grade = db.Column(db.String(100), nullable=False)
+    member3skill = db.Column(db.String(100), nullable=False)
+    member3size = db.Column(db.String(100), nullable=False)
     member3phone = db.Column(db.String(11), nullable=False)
+    member3email = db.Column(db.String(100), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 
