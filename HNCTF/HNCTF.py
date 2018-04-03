@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, g
 from exts import db
 import config
 import os
-from models import Teacher, Team
+from models import Teacher, Team, School
 from datetime import timedelta
 
 
@@ -50,21 +50,16 @@ def Profile():
         if request.method == 'GET':
             return render_template('Profile.html')
         else:
-            teachername = request.form.get('teachername')
             teachersex = request.form.get('teachersex')
-            school = request.form.get('school')
             teacherdepartment = request.form.get('teacherdepartment')
             teacherjob = request.form.get('teacherjob')
-            teacherphone = request.form.get('teacherphone')
             teacheremail = request.form.get('teacheremail')
             teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
             teacher.teachersex = teachersex
-            teacher.school = school
             teacher.teacherdepartment = teacherdepartment
             teacher.teacherjob = teacherjob
-            teacher.teacherphone = teacherphone
             teacher.teacheremail = teacheremail
-            print(teacherjob,teachername)
+            print(teacherjob)
             print(teacher)
             db.session.commit()
             return render_template('Profile.html')
@@ -163,7 +158,18 @@ def Login():
             flash(u'账号或密码输入错误，请确认后重新输入！')
             return redirect(url_for('Login'))
 
+#添加学校模块，查询学校是否被添加到school表中
 
+@app.route('add/school/' ,methods=['GET','POST'])
+def AddSchool():
+    if request.method=='GET':
+        return render_template('')
+    else:
+        school = request.form.get('school')
+
+
+
+        return redirect(url_for('AddSchool'))
 
 
 @app.route('/Register/', methods=['GET', 'POST'])
@@ -187,8 +193,13 @@ def Regist():
                 flash('两次输入的密码不相同，请重新输入！')
                 return redirect(url_for('Regist'))
             else:
-                teacher = Teacher(school=school, teachername=teachername, teacherphone=teacherphone, password=password)
+                print(school)
+                school_id = School.query.filter(School.school == school).first()
+
+                print('school',school_id.school)
+                teacher = Teacher(teachername=teachername, teacherphone=teacherphone, password=password)
                 #数据添加到数据库中
+                teacher.Tshcool=school_id
                 db.session.add(teacher)
                 db.session.commit()
 

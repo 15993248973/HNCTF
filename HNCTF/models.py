@@ -3,19 +3,26 @@
 from exts import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
+class School(db.Model):
+    __tablename__ = 'school'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    school = db.Column(db.String(100), nullable=True)
 
 class Teacher(db.Model):
     __tablename__ = 'teacher'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    school = db.Column(db.String(100), nullable=False)
-    teachername = db.Column(db.String(100), nullable=False)
-    teacherphone = db.Column(db.String(11), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    teachersex = db.Column(db.String(100), nullable=True)
-    teacherdepartment = db.Column(db.String(100), nullable=True)
-    teacherjob = db.Column(db.String(100), nullable=True)
-    teacheremail = db.Column(db.String(100), nullable=True)
-    teacherroom = db.Column(db.String(100), nullable=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True) # 老师id
+    teachername = db.Column(db.String(100), nullable=False) # 老师名字
+    teamname = db.Column(db.String(100), nullable=True)     # 队伍名字
+    teacherphone = db.Column(db.String(11), nullable=False)     # 老师手机
+    password = db.Column(db.String(100), nullable=False)     # 老师密码
+    teachersex = db.Column(db.String(100), nullable=True)     # 老师性别
+    teacherdepartment = db.Column(db.String(100), nullable=True)     # 老师部门
+    teacherjob = db.Column(db.String(100), nullable=True)     # 老师职位
+    teacheremail = db.Column(db.String(100), nullable=True)     # 老师邮箱
+    teacherroom = db.Column(db.String(100), nullable=True)     # 老师备注房间
+    school_teacher_id = db.Column(db.Integer, db.ForeignKey('school.id'))
+
+    Tshcool = db.relationship('School',backref= db.backref('teachers'))
 
 
     #拦截用户数据
@@ -38,39 +45,23 @@ class Teacher(db.Model):
 
 class Team(db.Model):
     __talename__ = 'team'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    school = db.Column(db.String(100), nullable=False)
-    teamname = db.Column(db.String(100), nullable=False)
-    teacher = db.Column(db.String(100), nullable=False)
-    teacherphone = db.Column(db.String(11), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)     # 学生id
+    membername = db.Column(db.String(100), nullable=True)     # 成员姓名
+    membersex = db.Column(db.String(100), nullable=True)     # 成员性别
+    membergrade = db.Column(db.String(100), nullable=True)     # 成员专业年级
+    memberskill = db.Column(db.String(100), nullable=True)     # 成员技能
+    membersize = db.Column(db.String(100), nullable=True)     # 成员尺寸
+    memberphone = db.Column(db.String(11), nullable=True)     # 成员手机
+    memberemail = db.Column(db.String(100), nullable=True)     # 成员邮件
+    school_team_id = db.Column(db.Integer,db.ForeignKey('school.id'))
+    teacher_team_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 
-    member1 = db.Column(db.String(100), nullable=False)
-    member1sex = db.Column(db.String(100), nullable=False)
-    member1grade = db.Column(db.String(100), nullable=False)
-    member1skill = db.Column(db.String(100), nullable=False)
-    member1size = db.Column(db.String(100), nullable=False)
-    member1phone = db.Column(db.String(11), nullable=False)
-    member1email = db.Column(db.String(100), nullable=False)
+    Xshcool = db.relationship('School',backref = db.backref('groups'))  #学校下面所有的人
 
-    member2 = db.Column(db.String(100), nullable=False)
-    member2sex = db.Column(db.String(100), nullable=False)
-    member2grade = db.Column(db.String(100), nullable=False)
-    member2skill = db.Column(db.String(100), nullable=False)
-    member2size = db.Column(db.String(100), nullable=False)
-    member2phone = db.Column(db.String(11), nullable=False)
-    member2email = db.Column(db.String(100), nullable=False)
+    Xteacher = db.relationship('Teacher', backref=db.backref('teams'))
+                          #在team中查找某个学生             在老师中查找某个老师
+                          #。zteacher就是老师对象             。teams就是全部学生对象然后for循环出所有的对象
 
-    member3 = db.Column(db.String(100), nullable=False)
-    member3sex = db.Column(db.String(100), nullable=False)
-    member3grade = db.Column(db.String(100), nullable=False)
-    member3skill = db.Column(db.String(100), nullable=False)
-    member3size = db.Column(db.String(100), nullable=False)
-    member3phone = db.Column(db.String(11), nullable=False)
-    member3email = db.Column(db.String(100), nullable=False)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
-
-    user = db.relationship('Teacher', backref=db.backref('teams'))
 
 
 
