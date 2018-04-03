@@ -12,31 +12,9 @@
                 <div class="form-group">
 	                <span class="page">选择高校 :</span>
                      <select class="form-control" name="school" >
-                        <option >中原工学院</option>
-                        <option>中原工学院信息商务学院</option>
-                        <option>升达贸易管理学院</option>
-                        <option>西亚斯</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
-                        <option>河南警察学院</option>
+	                     {% for school in schools %}
+                        <option >{{ school.school }}</option>
+	                     {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">

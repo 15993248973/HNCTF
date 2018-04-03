@@ -1,10 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
+　
 
-</body>
-</html>
+{% extends 'Base.html' %}
+
+{% block title %}管理员页面{% endblock %}
+	{% block head %}
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Bootstrap Styles-->
+	    <link href="{{ url_for('static',filename='assets/css/bootstrap.css') }}" rel="stylesheet" />
+	     <!-- FontAwesome Styles-->
+	    <link href="{{ url_for('static',filename='assets/css/font-awesome.css') }}" rel="stylesheet" />
+		<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/form.css') }}">
+	        <!-- Custom Styles-->
+	    <link href="{{ url_for('static',filename='assets/css/custom-styles.css') }}" rel="stylesheet" />
+	     <!-- Google Fonts-->
+	   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+	{% endblock %}
+
+{% block body %}
+    <div class="main">
+
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a href="{{ url_for('Basic') }}"><i class="fa fa-dashboard"></i> 添加学校</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('Profile') }}" ><i class="fa fa-desktop"></i> 个人信息</a>
+                    </li>
+	                <li>
+                        <a href="{{ url_for('MyPage') }}"><i class="fa fa-qrcode"></i> 个人带队</a>
+                    </li>
+
+                    <li>
+                        <a  href="{{ url_for('AllMessage') }}"><i class="fa fa-sitemap"></i> 队伍信息总揽<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ url_for('FirstTeam') }}">一队</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('SecondTeam') }}">二队</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('ThirdTeam') }}">三队</a>
+                            </li>
+                        </ul>
+                        <li>
+                            <a href="#"><i class="fa fa-table"></i> 修改密码</a>
+                        </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+	{% block bodyright %}{% endblock %}
+	       <div id="page-wrapper" >
+            <div id="page-inner">
+              <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form" method="POST">
+								        <div class="control">
+								             <div class="label-page"><label >添加学校</label></div>
+								                <input type="text" class="form-control" value =""  name="addschool"  required />
+									        <button type="submit" class="btn btn-primary center-block">添加学校</button>
+								        </div>
+                                    </form>
+									{% for i in schools %}
+											<div class="control">
+							             <div class="label-page"><label >学校</label></div>
+							                <input type="text" class="form-control" value ="{{ i.school }}"  name="schools"  required />
+							        </div>
+									{% endfor %}
+{#	    <script src="{{ url_for('static',filename='assets/js/jquery-1.10.2.js') }}"></script>#}
+      <!-- Bootstrap Js -->
+{#	    <script src="{{ url_for('static',filename='assets/js/bootstrap.min.js')}}"></script>#}
+    <!-- Metis Menu Js -->
+{#    <script src="{{ url_for('static',filename='assets/js/jquery.metisMenu.js') }}"></script>#}
+      <!-- Custom Js -->
+{#    <script src="{{ url_for('static',filename='assets/js/custom-scripts.js') }}"></script>#}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+	       </div>
+
+{% endblock %}

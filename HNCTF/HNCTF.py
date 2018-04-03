@@ -54,11 +54,16 @@ def Profile():
             teacherdepartment = request.form.get('teacherdepartment')
             teacherjob = request.form.get('teacherjob')
             teacheremail = request.form.get('teacheremail')
+            teacherroom = request.form.get('teacherroom')
+            teamname = request.form.get('teamname')
+            password = request.form.get('password')
             teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
             teacher.teachersex = teachersex
             teacher.teacherdepartment = teacherdepartment
             teacher.teacherjob = teacherjob
             teacher.teacheremail = teacheremail
+            teacher.teacherroom = teacherroom
+            teacher.teamname = teamname
             print(teacherjob)
             print(teacher)
             db.session.commit()
@@ -160,22 +165,34 @@ def Login():
 
 #添加学校模块，查询学校是否被添加到school表中
 
-@app.route('add/school/' ,methods=['GET','POST'])
+@app.route('/admin/add/school/' ,methods=['GET','POST'])
 def AddSchool():
     if request.method=='GET':
-        return render_template('')
+        Schools = {
+            'schools': School.query.order_by('id').all()
+        }
+        return render_template('Admin.html',**Schools)
     else:
-        school = request.form.get('school')
+        school = request.form.get('addschool')
 
+        addschool = School.query.filter(School.school==school).first()
+        if addschool:
+            return '学校已经添加'
+        else:
+            school = School(school = school)
+            db.session.add(school)
+            db.session.commit()
+            return redirect(url_for('AddSchool'))
 
-
-        return redirect(url_for('AddSchool'))
-
+# 删除学校
 
 @app.route('/Register/', methods=['GET', 'POST'])
 def Regist():
     if request.method == 'GET':
-        return render_template('Register.html')
+        Schools = {
+            'schools': School.query.order_by('id').all()
+        }
+        return render_template('Register.html',**Schools)
     else:
         school = request.form.get('school')
         teachername = request.form.get('teachername')
