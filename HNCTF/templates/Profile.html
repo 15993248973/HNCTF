@@ -11,8 +11,10 @@
                                     <form role="form" method="POST">
 	                                    <div class="control">
 		                                    <fieldset disabled="">
-	                                        <div class="label-page"><label >学校</label></div>
+			                                    <div class="form-group">
+	                                            <div class="label-page"><label >学校</label></div>
                                                 <input type="text" class="form-control" value ="{{ school.school }}"  name="school"  required />
+			                                    </div>
 		                                    </fieldset>
 	                                    </div>
 	                                    <div class="control">
@@ -36,10 +38,6 @@
 	                                        <div class="label-page"><label >职位</label></div>
                                                 <input type="text" class="form-control" value ="{{ teacher.teacherjob }}"  placeholder="zhiwei " name="teacherjob"  required />
 	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队伍名</label></div>
-                                                <input type="text" class="form-control" value ="{{ teacher.teamname }}"  placeholder="zhiwei " name="teamame"  required />
-	                                    </div>
 
 	                                    <div class="control">
 		                                    <fieldset disabled="">
@@ -47,19 +45,14 @@
                                                 <input type="text" class="form-control" value ="{{ teacher.teacherphone }}"  name="teacherphone"  required />
 		                                    </fieldset>
 	                                    </div>
-	                                    <div class="control">
-		                                    <fieldset disabled="">
-	                                        <div class="label-page"><label >密码</label></div>
-                                                <input type="text" class="form-control" value ="{{ teacher.password }}"  name="password"  required />
-		                                    </fieldset>
-	                                    </div>
+
 	                                    <div class="control">
 	                                        <div class="label-page"><label >邮箱</label></div>
                                                 <input type="text" class="form-control" value ="{{ teacher.teacheremail }}"  name="teacheremail"  required />
 	                                    </div>
 	                                    <div class="control">
 	                                        <div class="label-page"><label >所需房间</label></div>
-                                                <input type="text" class="form-control" value ="{{ teacher.teacheroom }}"  name="teacherroom"  required />
+                                                <input type="text" class="form-control" value ="{{ teacher.teacherroom }}"  name="teacherroom"  required />
 	                                    </div>
 
 	                                <button type="submit" class="btn btn-primary center-block">提交修改信息</button>

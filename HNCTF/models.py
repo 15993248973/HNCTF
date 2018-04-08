@@ -22,7 +22,7 @@ class Teacher(db.Model):
     teacherroom = db.Column(db.String(100), nullable=True)     # 老师备注房间
     school_teacher_id = db.Column(db.Integer, db.ForeignKey('school.id'))
 
-    Tshcool = db.relationship('School',backref= db.backref('teachers'))
+    Tschool = db.relationship('School',backref= db.backref('teachers'))
 
 
     #拦截用户数据
@@ -47,6 +47,7 @@ class Team(db.Model):
     __talename__ = 'team'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)     # 学生id
     membername = db.Column(db.String(100), nullable=True)     # 成员姓名
+    teamname = db.Column(db.String(100), nullable=True)     # 队伍名
     membersex = db.Column(db.String(100), nullable=True)     # 成员性别
     membergrade = db.Column(db.String(100), nullable=True)     # 成员专业年级
     memberskill = db.Column(db.String(100), nullable=True)     # 成员技能
@@ -56,7 +57,7 @@ class Team(db.Model):
     school_team_id = db.Column(db.Integer,db.ForeignKey('school.id'))
     teacher_team_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 
-    Xshcool = db.relationship('School',backref = db.backref('groups'))  #学校下面所有的人
+    Xschool = db.relationship('School',backref = db.backref('groups'))  #学校下面所有的人
 
     Xteacher = db.relationship('Teacher', backref=db.backref('teams'))
                           #在team中查找某个学生             在老师中查找某个老师

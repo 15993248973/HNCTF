@@ -22,52 +22,91 @@ def Index():
 
 @app.route('/Base/')
 def Base():
-    return render_template('Base.html')
+    teams = g.teacher.teams
+    return render_template('Base.html',teams=teams)
 
-@app.route('/MyPage/')
+@app.route('/Add/MyPage/',methods=['GET','POST'])
 def MyPage():
+
     if g.teacher_id:
-        return render_template('form.html')
+        if request.method=='GET':
+            school = g.teacher.Tschool
+            teams = g.teacher.teams
+            return render_template('form.html',school=school,teams = teams)
+        else:
+            createteam = request.form.get('createteam')
+            team =Team.query.filter(Team.teamname==createteam).first()
+            if team:
+                print('qingchong..')
+                return '已经注册'
+            else:
+                team = Team(teamname=createteam)
+                team.teacher_team_id = g.teacher_id
+                db.session.add(team)
+                db.session.commit()
+                return redirect(url_for('MyPage'))
     else:
         return redirect(url_for('Login'))
 
-@app.route('/AllMessage/')
+
+@app.route('/del/team/',methods=['GET','POST'])
+def delteam():
+    if request.method=='POST':
+        delteam = request.form.get('delteam')
+        print(delteam)
+        team = Team.query.filter(Team.teamname==delteam).first()
+        db.session.delete(team)
+        db.session.commit()
+        return redirect(url_for('MyPage'))
+    else:
+        print('qq')
+        return redirect(url_for('MyPage'))
+
+
+
+
+@app.route('/AllMessage/')                #所有信息显示
 def AllMessage():
     if g.teacher_id:
-        return render_template('AllMessage.html')
+        teams = g.teacher.teams
+        return render_template('AllMessage.html',teams=teams)
     else:
         return redirect(url_for('Login'))#
 #设置信息
-@app.route('/Setting/Basic/')
+@app.route('/Setting/Basic/')              # 基础模版
 def Basic():
     if g.teacher_id:
-        return render_template('Basic.html')
+        teams = g.teacher.teams
+        return render_template('Basic.html',teams=teams)
     else:
         return redirect(url_for('Login'))#
-@app.route('/Setting/Profile/',methods=['GET','POST'])
+@app.route('/Delete/Team',methods=['GET'])
+
+
+
+
+
+@app.route('/Setting/Profile/',methods=['GET','POST'])       #个人信息展示
 def Profile():
     if g.teacher_id:
         if request.method == 'GET':
-            return render_template('Profile.html')
+            school = g.teacher.Tschool
+            teams = g.teacher.teams
+            return render_template('Profile.html', school=school,teams=teams)
         else:
             teachersex = request.form.get('teachersex')
             teacherdepartment = request.form.get('teacherdepartment')
             teacherjob = request.form.get('teacherjob')
             teacheremail = request.form.get('teacheremail')
             teacherroom = request.form.get('teacherroom')
-            teamname = request.form.get('teamname')
-            password = request.form.get('password')
             teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
             teacher.teachersex = teachersex
             teacher.teacherdepartment = teacherdepartment
             teacher.teacherjob = teacherjob
             teacher.teacheremail = teacheremail
             teacher.teacherroom = teacherroom
-            teacher.teamname = teamname
-            print(teacherjob)
-            print(teacher)
             db.session.commit()
-            return render_template('Profile.html')
+            return redirect(url_for('Profile'))
     else:
         return redirect(url_for('Login'))#
 @app.route('/Setting/CreateTeam/')
@@ -76,10 +115,42 @@ def CreateTeam():
         return render_template('CreateTeam.html')
     else:
         return redirect(url_for('Login'))#
-@app.route('/Setting/FirstTeam/')
+@app.route('/Setting/FirstTeam/',methods=['GET','POST'])            #第一支队伍的展示
 def FirstTeam():
     if g.teacher_id:
-        return render_template('FirstTeam.html')
+        if request.method=='GET':
+            school = g.teacher.Tschool
+            teams = g.teacher.teams
+            teamss = g.teacher.teams
+            try:
+                return render_template('FirstTeam.html',school=school,teamss=teamss[0],teams=teams)
+            except IndexError as e:
+                return '404'
+
+        else:
+            membername = request.form.get('membername')
+            membersex = request.form.get('membersex')
+            membergrade= request.form.get('membergrade')
+            membersize = request.form.get('membersize')
+            memberskill = request.form.get('memberskill')
+            memberphone = request.form.get('memberphone')
+            memberemail = request.form.get('memberemail')
+            memberroom = request.form.get('memberroom')
+            team = Team.query.filter(Team.teacher_team_id==g.teacher_id).first()
+            team.membername = membername
+            team.membersex=membersex
+            team.membergrade=membergrade
+            team.membersize=membersize
+            team.memberskill=memberskill
+            team.memberphone=memberphone
+            team.memberemail=memberemail
+            team.memberroom = memberroom
+            team.school_team_id = g.teacher.Tschool.id
+            db.session.commit()
+
+            return redirect(url_for('FirstTeam'))
+
+
     else:
         return redirect(url_for('Login'))#
 @app.route('/Setting/SecondTeam/')
@@ -94,15 +165,6 @@ def ThirdTeam():
         return render_template('ThirdTeam.html')
     else:
         return redirect(url_for('Login'))#
-
-
-@app.route('/MyTeam/')
-def MyTeam():
-    if g.teacher_id:
-        result = g.teacher.teams
-        return render_template('MyTeam.html', result=result)
-    else:
-        return redirect(url_for('Login'))
 
 
 @app.route('/ModifyTeam/', methods=['GET', 'POST'])
@@ -216,7 +278,7 @@ def Regist():
                 print('school',school_id.school)
                 teacher = Teacher(teachername=teachername, teacherphone=teacherphone, password=password)
                 #数据添加到数据库中
-                teacher.Tshcool=school_id
+                teacher.school_teacher_id=school_id.id
                 db.session.add(teacher)
                 db.session.commit()
 

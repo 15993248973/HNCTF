@@ -37,15 +37,22 @@
                     <li>
                         <a  href="{{ url_for('AllMessage') }}"><i class="fa fa-sitemap"></i> 队伍信息总揽<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
+{#	                        {% for team in teams %}#}
+	                        {% if teams|length >0 %}
                             <li>
-                                <a href="{{ url_for('FirstTeam') }}">一队</a>
+                                <a href="{{ url_for('FirstTeam') }}">{{ teams[0].teamname }}</a>
                             </li>
+		                        {% endif %}
+	                        {% if teams|length >1 %}
                             <li>
-                                <a href="{{ url_for('SecondTeam') }}">二队</a>
+                                <a href="{{ url_for('SecondTeam') }}">{{ teams[1].teamname }}</a>
                             </li>
+		                        {% endif %}
+	                        {% if teams|length>2 %}
                             <li>
-                                <a href="{{ url_for('ThirdTeam') }}">三队</a>
+                                <a href="{{ url_for('ThirdTeam') }}">{{ teams[2].teamname }}</a>
                             </li>
+	                        {% endif %}
                         </ul>
                         <li>
                             <a href="#"><i class="fa fa-table"></i> 修改密码</a>

@@ -8,10 +8,10 @@
         <div id="page-wrapper" >
 		  <div class="header"> 
                         <h1 class="page-header">
-                             {{ teacher.teachername }}____&队伍信息 <small>团队名字这个到时候显示团队名字</small>
+                             {{ teacher.teachername }} <small>共带领{{ teams|length }}支队伍</small>
                         </h1>
 						<ol class="breadcrumb">
-					  <li><a href="#">Home</a></li>
+					  <li><a href="{{ url_for('Index') }}">主页</a></li>
 					  <li><a href="#">Forms</a></li>
 					  <li class="active">Data</li>
 					</ol> 
@@ -22,63 +22,61 @@
               <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            信息
-                        </div>
+{#                        <div class="panel-heading">#}
+{#                            信息#}
+{#                        </div>#}
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form">
-	                                    <div class="control">
-	                                        <div class="label-page"><label >负责人</label></div>
-                                                <input class="form-control" value ="{{ teacher.teachername }}"  >
-	                                    </div>
-
+{#                                    <form role="form" >#}
 	                                    <div class="control">
 		                                    <fieldset disabled="">
 			                                    <div class="form-group">
 				                                    <div class="label-page"><label >学校</label></div>
-				                                    <input class="form-control" value ="{{ teacher.school }}"  >
+				                                    <input class="form-control" value ="{{ school.school }}"  >
 	                                            </div>
 		                                    </fieldset>
 	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队伍一</label></div>
-                                                <input class="form-control" value ="队伍名：成员：名字、名字、名字、名字"  >
-		                                    <button type="submit" class="btn btn-danger ">解散队伍</button>
+                                    <fieldset disabled="disabled">
+	                                    <div class="control" >
+	                                        <div class="label-page"><label >指导老师</label></div>
+                                                <input class="form-control" value ="{{ teacher.teachername }}"  >
 	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队伍二</label></div>
-                                                <input class="form-control" value ="队伍名：成员：名字、名字、名字、名字）"  >
-		                                    <button type="submit" class="btn btn-danger ">解散队伍</button>
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队伍三</label></div>
-                                                <input class="form-control" value ="队伍名：成员：名字、名字、名字、名字"  >
-		                                    <button type="submit" class="btn btn-danger ">解散队伍</button>
-	                                    </div>
-                                    </form>
-	                                <form>
-	                                <button type="submit" class="btn btn-primary center-block">提交修改信息</button>
-
-                            <!-- /.row (nested) -->
-                                    </form>
+                                    </fieldset>
+									{% if (teams|length) >= 3 %}
+										<fieldset disabled="">
+		                                    <div class="control">
+		                                        <div class="label-page"><label >创建队伍</label></div>
+	                                                <input class="form-control" placeholder="最多创建3支队伍，或删除" name="createteam" required>
+			                                    <button type="submit" class="btn btn-primary "  >创建队伍</button>
+		                                    </div>
+										</fieldset>
+                                    {% else %}
+		                                <form role="form" method="POST">
+		                                    <div class="control">
+		                                        <div class="label-page"><label >创建队伍</label></div>
+	                                                <input class="form-control" placeholder="请输入要创建队伍名" name="createteam" required>
+			                                    <button type="submit" class="btn btn-primary "  >创建队伍</button>
+		                                    </div>
+		                                </form>
+										<br>
+                                    {% endif %}
+	                                    {% for i in range(teams|length) %}
+		                                    <form role="form" method="POST" action='../../del/team/'>
+			                                    
+		                                        <div class="control">
+		                                        <div class="label-page"><label >带领队伍---{{ i + 1 }}</label></div>
+			                                        
+	                                                <input class="form-control" value ={{teams[i].teamname}}  name="delteam">
+			                                        <button type="submit" class="btn btn-danger " >解散队伍</button>
+		                                        </div>
+	                                        </form>
+	                                    {% endfor %}
+                                </form>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-	                   
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
-            <!--</div>-->
-			<!--<footer><p>Copyright &copy; 2016.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p></footer>-->
-			<!--</div>-->
-             <!-- /. PAGE INNER  -->
             </div>
-         <!-- /. PAGE WRAPPER  -->
         </div>
-
-
-
 {% endblock %}
 
