@@ -11,13 +11,26 @@
                             <ul class="nav nav-pills">
                                 <li class="active"><a href="#home-pills" data-toggle="tab">小队成员信息</a>
                                 </li>
-                                <li class=""><a href="#profile-pills" data-toggle="tab">成员一</a>
+	                            {% for i in range(members|length) %}
+                                <li class=""><a href="#{{i}}" data-toggle="tab">完善成员{{i+1}}信息</a>
                                 </li>
-                                <li class=""><a href="#messages-pills" data-toggle="tab">成员二</a>
-                                </li>
-                                <li class=""><a href="#settings-pills" data-toggle="tab">成员三</a>
-                                </li>
+                                {% endfor %}
+	                            {% if (members|length)<3 %}
+	                            <li>
+		                            <form role="form" method="POST" href="">
+			                            <button class="btn-primary btn-block btn">添加成员</button>
+			                            </form>
+	                            </li>
+	                            
+	                            {% else %}
+	                            <li>
+		                            <fieldset disabled>
+			                            <button class="btn-primary btn-danger btn">禁止添加</button>
+		                            </fieldset>
+	                            </li>
+	                            {% endif %}
                             </ul>
+	                           
 
                             <div class="tab-content">
                                 <div class="tab-pane fade active in"  id="home-pills">
@@ -26,7 +39,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" method="POST">
+                                    
 	                                    <div class="control">
 		                                    <fieldset disabled="">
 			                                    <div class="form-group">
@@ -49,52 +62,40 @@
                                                 <input type="text" class="form-control" value ="{{ teamss.teamname }}"    required />
 	                                    </div>
 	                                    </fieldset>
+	                                    {% for i in range(members|length) %}
+	                                <hr  style="height:3px;border:none;border-top:3px groove skyblue;"/>
+	                                
+	                                    <form role="form" method="POST" action='Dele/'>
+	                                    <div class="control has-error">
+	                                        <div class="label-page "><label >队员{{i+1}}姓名</label></div>
+                                                <input type="text" class="form-control" value ="{{ members[i].membername }}" name="membername"  required />
+		                                        <button type="submit" class="btn btn-danger " >移除队员</button>
+	                                    </div>
+	                                    </form>
 	                                    <div class="control">
-	                                        <div class="label-page"><label >队员姓名</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membername }}" name="membername"  required />
+	                                        <div class="label-page"><label >队员{{i+1}}技能偏向</label></div>
+                                                <input type="text" class="form-control" value ="{{ members[i].memberskill }}"  name="memberskill"  required />
 	                                    </div>
 	                                    <div class="control">
-	                                        <div class="label-page"><label >性别</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membersex }}"  placeholder="zhiwei " name="membersex"  required />
+	                                        <div class="label-page"><label >队员{{i+1}}手机号</label></div>
+                                                <input type="text" class="form-control" value ="{{ members[i].memberphone }}"  name="memberphone"  required />
 	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >专业/年级</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membergrade }}"  name="membergrade"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >衣服尺码</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membersize }}"  name="membersize"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >技能偏向</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberskill }}"  name="memberskill"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >手机号</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberphone }}"  name="memberphone"  required />
-	                                    </div><div class="control">
-	                                        <div class="label-page"><label >邮箱</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberemail }}"  name="memberemail"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >备注</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberroom }}"  name="memberroom"  required />
-	                                    </div>
-
-	                                <button type="submit" class="btn btn-primary center-block">提交修改信息</button>
-                                    </form>
+	                                    
+	                                    {%endfor%}
+                                    
                         </div>
                     </div>
                 </div>
             </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile-pills">
-	                                <h4>第一名成员</h4>
+          </div>
+	                            {% for i in range(members|length) %}
+                                <div class="tab-pane fade" id="{{i}}">
+	                                <h4>第{{i+1}}名成员</h4>
 	                                <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" method="POST">
+                                    <form role="form" method="POST" action="Updata/">
 	                                    <div class="control">
 		                                    <fieldset disabled="">
 			                                    <div class="form-group">
@@ -156,142 +157,9 @@
                 </div>
             </div>
                                  </div>
-                                <div class="tab-pane fade" id="messages-pills">
-                                    <h4>第二名成员</h4>
-	                                <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <form role="form" method="POST">
-	                                    <div class="control">
-		                                    <fieldset disabled="">
-			                                    <div class="form-group">
-	                                            <div class="label-page"><label >学校</label></div>
-                                                <input type="text" class="form-control" value ="{{ school.school }}"  name="school"  required />
-			                                    </div>
-		                                    </fieldset>
-	                                    </div>
-	                                    <div class="control">
-		                                    <fieldset disabled="">
-			                                    <div class="form-group">
-				                                    <div class="label-page"><label >指导老师</label></div>
-				                                    <input type="text" class="form-control" value ="{{ teacher.teachername }}"   required />
-	                                            </div>
-		                                    </fieldset>
-	                                    </div>
-	                                    <fieldset disabled>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队名</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.teamname }}"    required />
-	                                    </div>
-	                                    </fieldset>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队员姓名</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membername }}" name="membername"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >性别</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membersex }}"  placeholder="zhiwei " name="membersex"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >专业/年级</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membergrade }}"  name="membergrade"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >衣服尺码</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membersize }}"  name="membersize"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >技能偏向</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberskill }}"  name="memberskill"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >手机号</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberphone }}"  name="memberphone"  required />
-	                                    </div><div class="control">
-	                                        <div class="label-page"><label >邮箱</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberemail }}"  name="memberemail"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >备注</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberroom }}"  name="memberroom"  required />
-	                                    </div>
-
-	                                <button type="submit" class="btn btn-primary center-block">提交修改信息</button>
-                                    </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                </div>
-                                <div class="tab-pane fade  " id="settings-pills">
-                                    <h4>第三名成员</h4>
-	                                <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <form role="form" method="POST">
-	                                    <div class="control">
-		                                    <fieldset disabled="">
-			                                    <div class="form-group">
-	                                            <div class="label-page"><label >学校</label></div>
-                                                <input type="text" class="form-control" value ="{{ school.school }}"  name="school"  required />
-			                                    </div>
-		                                    </fieldset>
-	                                    </div>
-	                                    <div class="control">
-		                                    <fieldset disabled="">
-			                                    <div class="form-group">
-				                                    <div class="label-page"><label >指导老师</label></div>
-				                                    <input type="text" class="form-control" value ="{{ teacher.teachername }}"   required />
-	                                            </div>
-		                                    </fieldset>
-	                                    </div>
-	                                    <fieldset disabled>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队名</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.teamname }}"    required />
-	                                    </div>
-	                                    </fieldset>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >队员姓名</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membername }}" name="membername"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >性别</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membersex }}"  placeholder="zhiwei " name="membersex"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >专业/年级</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membergrade }}"  name="membergrade"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >衣服尺码</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.membersize }}"  name="membersize"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >技能偏向</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberskill }}"  name="memberskill"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >手机号</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberphone }}"  name="memberphone"  required />
-	                                    </div><div class="control">
-	                                        <div class="label-page"><label >邮箱</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberemail }}"  name="memberemail"  required />
-	                                    </div>
-	                                    <div class="control">
-	                                        <div class="label-page"><label >备注</label></div>
-                                                <input type="text" class="form-control" value ="{{ teamss.memberroom }}"  name="memberroom"  required />
-	                                    </div>
-
-	                                <button type="submit" class="btn btn-primary center-block">提交修改信息</button>
-                                    </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                </div>
+	                            {% endfor %}
+	                            
+	                            
                             </div>
                         </div>
                     </div>

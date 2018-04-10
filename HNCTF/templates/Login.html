@@ -5,38 +5,69 @@
 	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/LoginBox.css') }}">
     <script  src="{{ url_for('static', filename='form/js/checkCode.js') }}"></script>
 
+	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/gloab.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/index.css') }}">
+	<script src="{{ url_for('static',filename='form/js/jquery-1.11.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='form/js/register.js') }}"></script>
+
+
 {% endblock %}
 
 {% block title %}登录{% endblock %}
 
+
+
 {% block body %}
     <div class="main" >
         <h1 class="page-title">登录</h1>
+	    <div class="reg-box" id="verifyCheck" style="margin-top:5px;">
         <form action="" onsubmit="return validate()" method="POST">
 	        <div class="form-container">
-                <div class="form-group">
-	                <span class="page">手机号 :</span>
-                   <input type="number" class="form-control" placeholder="老师电话" name="teacherphone" required />
-                </div>
-                <div class="form-group">
+		        <div class="form-group item">
+			                <span class="page">手机号： </span>
+							 <div class="f-fl item-ifo">
+							 <input type="text" name="teacherphone" class=" txt03 f-r3 required" keycodes="tel" tabindex="2" data-valid="isNonEmpty||isPhone" data-error="手机号码不能为空||手机号码格式不正确" maxlength="11" id="phone"required />
+                             <span class="ie8 icon-close close hide"></span>
+                             <label class="icon-sucessfill blank hide"></label>
+                             <label class="focus">请填写11位有效的手机号码</label>
+                             <label class="focus valid"></label>
+							 </div>
+						 </div>
+                <div class="form-group item">
 	                <span class="page">密码 :</span>
-                    <input type="password" class="form-control" placeholder="密码" name="password" required />
+	                <div class="f-fl item-ifo">
+                            <input type="password" name="password" id="password" maxlength="20" class="  txt03 f-r3 required" tabindex="3" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-20||level:2" data-error="密码不能为空||密码长度6-20位||该密码太简单，有被盗风险，建议字母+数字的组合" required />
+                            <span class="ie8 icon-close close hide" style="right:55px"></span>
+                            <span class="showpwd" data-eye="password"></span>
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">6-20位英文（区分大小写）、数字、字符的组合</label>
+                            <label class="focus valid"></label>
+	                </div>
                 </div>
+	        
+                <div class="form-group item">
+					        <span class="intelligent-label f-fl">验证码：</span>
+					        <div class="form-group item ">
+						        <input type="text" id="input" data-valid="isNonEmpty"  class=" txt03 required" />
+						        <input type="button" id="code" onclick="createCode()"  />
+						        <label class="focusa">看不清？<a href="javascript:;" class="c-blue" onclick="createCode()">换一张</a></label>
+                            </div>
+				        </div>
+		        <div class="form-container">
                 <div class="form-group">
-                    <input type="text" id="input" />
-                    <input type="button" id="code" onclick="createCode()" />
-                </div>
-                <div class="form-group">
-                   <button class="btn btn-primary btn-block"  >登录</button>
+                   <button class="btn btn-primary btn-block " >立即登录</button>
 	                <p> 还没帐号？去<a  href="{{ url_for('Regist') }}"> 注册</a></p>
                 </div>
+		        </div>
                 {% for message in get_flashed_messages() %}
-                {{ message }}
+		        <p>
+			        <a> {{ message }}</a>
+		        </p>
                 {% endfor %}
 	        </div>
         </form>
     </div>
-
+    </div>
 {% endblock %}
 
 

@@ -27,7 +27,7 @@ button {text-align:center}
 .reg-box .txt03:focus{border-color:#1a97d7;}
 .reg-box .blank {width:16px;height:16px; font-size:16px;position: absolute;left:280px;top:11px;float: none; color:#7abd54}
 .reg-box .close{position: absolute;top:5px;right:25px;font-size: 24px;}
-.reg-box .focus,.reg-box .focusa,.reg-box .error{line-height:34px;height:34px;position: absolute;top: 0px;left:480px;width:480px;padding: 0 5px;z-index:3; font-weight:normal; font-size:12px; color:#999}
+.reg-box .focus,.reg-box .focusa,.reg-box .error{line-height:34px;height:34px;position: absolute;top: 0px;left:430px;width:480px;padding: 0 5px;z-index:3; font-weight:normal; font-size:12px; color:#999}
 .reg-box .focus span,.reg-box .error span{ line-height:16px; display:block; padding:3px 0;}
 .reg-box .focus{color: #999;}
 .reg-box .valid{color: #f00;}
@@ -37,7 +37,7 @@ button {text-align:center}
 .reg-box .strength b i.on{ background:#ff6160}
 .reg-box .btn-blue{ font-size:18px; height:44px; line-height:44px; padding:0; width:270px;}
 .reg-box .btn-gray{ height:34px; line-height:34px; padding:0 12px;}
-.reg-box .part1,.reg-box .part2,.reg-box .part3{ padding-left:200px;}
+.reg-box .part1,.reg-box .part2,.reg-box .part3{ padding-left:298px;}
 .regcon {width: 482px;height:360px;margin-left: -241px;margin-top: -180px;background: #fff;}
 .regcon pre {border: 1px solid #B2B2B2;height: 240px;margin: 10px;overflow-x: hidden;overflow-y: scroll;padding: 5px;resize: both;width: 450px;background: #fff;font-size: 12px;color: #333;line-height: 1.7em;}
 

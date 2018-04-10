@@ -16,6 +16,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 		<!-- CSS
 		================================================== -->
+        <link rel="shortcur icon" href="{{ url_for('static',filename='home/img/ico/1.png')}}">
 		<!-- Fontawesome Icon font -->
         <link rel="stylesheet" href="{{ url_for('static', filename='home/css/font-awesome.min.css') }}">
 		<!-- Twitter Bootstrap css -->
@@ -82,7 +83,7 @@
 					                 <li><a class=" pageword" href="{{ url_for('RegisterTeam') }}">注册团队</a></li>
 						            <li><a class=" pageword" href="{{ url_for('AllMessage') }}">修改密码</a></li>
 {#						            <li role="separator" class="divider"></li>#}
-						            <li><a href="#">其他</a></li>
+						            <li><a href="#"> 注销</a></li>
 {#						            <li role="separator" class="divider"></li>#}
 {#						            <li><a href="#">其他</a></li>#}
 				                </ul>
@@ -508,61 +509,61 @@
 		<!-- Custom Functions -->
         <script src="{{ url_for('static', filename='home/js/custom.js') }}"></script>
 
-		<script type="text/javascript">
-			$(function(){
-				/* ========================================================================= */
-				/*	Contact Form
-				/* ========================================================================= */
+		<!--<script type="text/javascript">-->
+			<!--$(function(){-->
+				<!--/* ========================================================================= */-->
+				<!--/*	Contact Form-->
+				<!--/* ========================================================================= */-->
 
-				$('#contact-form').validate({
-					rules: {
-						name: {
-							required: true,
-							minlength: 2
-						},
-						email: {
-							required: true,
-							email: true
-						},
-						message: {
-							required: true
-						}
-					},
-					messages: {
-						name: {
-							required: "come on, you have a name don't you?",
-							minlength: "your name must consist of at least 2 characters"
-						},
-						email: {
-							required: "no email, no message"
-						},
-						message: {
-							required: "um...yea, you have to write something to send this form.",
-							minlength: "thats all? really?"
-						}
-					},
-					submitHandler: function(form) {
-						$(form).ajaxSubmit({
-							type:"POST",
-							data: $(form).serialize(),
-							url:"process.php",
-							success: function() {
-								$('#contact-form :input').attr('disabled', 'disabled');
-								$('#contact-form').fadeTo( "slow", 0.15, function() {
-									$(this).find(':input').attr('disabled', 'disabled');
-									$(this).find('label').css('cursor','default');
-									$('#success').fadeIn();
-								});
-							},
-							error: function() {
-								$('#contact-form').fadeTo( "slow", 0.15, function() {
-									$('#error').fadeIn();
-								});
-							}
-						});
-					}
-				});
-			});
-		</script>
+				<!--$('#contact-form').validate({-->
+					<!--rules: {-->
+						<!--name: {-->
+							<!--required: true,-->
+							<!--minlength: 2-->
+						<!--},-->
+						<!--email: {-->
+							<!--required: true,-->
+							<!--email: true-->
+						<!--},-->
+						<!--message: {-->
+							<!--required: true-->
+						<!--}-->
+					<!--},-->
+					<!--messages: {-->
+						<!--name: {-->
+							<!--required: "come on, you have a name don't you?",-->
+							<!--minlength: "your name must consist of at least 2 characters"-->
+						<!--},-->
+						<!--email: {-->
+							<!--required: "no email, no message"-->
+						<!--},-->
+						<!--message: {-->
+							<!--required: "um...yea, you have to write something to send this form.",-->
+							<!--minlength: "thats all? really?"-->
+						<!--}-->
+					<!--},-->
+					<!--submitHandler: function(form) {-->
+						<!--$(form).ajaxSubmit({-->
+							<!--type:"POST",-->
+							<!--data: $(form).serialize(),-->
+							<!--url:"process.php",-->
+							<!--success: function() {-->
+								<!--$('#contact-form :input').attr('disabled', 'disabled');-->
+								<!--$('#contact-form').fadeTo( "slow", 0.15, function() {-->
+									<!--$(this).find(':input').attr('disabled', 'disabled');-->
+									<!--$(this).find('label').css('cursor','default');-->
+									<!--$('#success').fadeIn();-->
+								<!--});-->
+							<!--},-->
+							<!--error: function() {-->
+								<!--$('#contact-form').fadeTo( "slow", 0.15, function() {-->
+									<!--$('#error').fadeIn();-->
+								<!--});-->
+							<!--}-->
+						<!--});-->
+					<!--}-->
+				<!--});-->
+			<!--});-->
+		<!--</script>-->
     </body>
 </html>
