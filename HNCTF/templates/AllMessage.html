@@ -1,150 +1,338 @@
-{% extends 'Basic.html' %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<!-- meta charec set -->
+	<meta charset="utf-8">
+	<!-- Always force latest IE rendering engine or request Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!-- Page Title -->
+	<title>{% block title %}{% endblock %}-HNCTF</title>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Google Font -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<!-- CSS
+	================================================== -->
+	
+	<!-- Fontawesome Icon font -->
+	
+	<link rel="shortcur icon" href="{{url_for('static',filename='home/img/ico/1.png')}}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/font-awesome.min.css') }}">
+	 <!--Twitter Bootstrap css -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/bootstrap.min.css') }}">
+	<!-- jquery.fancybox  -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/jquery.fancybox.css') }}">
+	<!-- animate -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/animate.css') }}">
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/main.css') }}">
+	<!-- media-queries -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/media-queries.css') }}">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!-- Bootstrap Styles-->
+
+	<link href="{{ url_for('static',filename='assets/css/bootstrap.css') }}" rel="stylesheet"/>
+	<!-- FontAwesome Styles-->
+	<link href="{{ url_for('static',filename='assets/css/font-awesome.css') }}" rel="stylesheet"/>
+
+	<!-- Custom Styles-->
+	<link href="{{ url_for('static',filename='assets/css/custom-styles.css') }}" rel="stylesheet"/>
+	<!-- Google Fonts-->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+	<link href="{{ url_for('static',filename='assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+	
+	<!-- Modernizer Script for old Browsers -->
+	<script src="{{ url_for('static', filename='home/js/modernizr-2.6.2.min.js') }}"></script>
 
 
-{% block bodyright %}
+</head>
 
-	    <div id="page-wrapper">
-		  <div class="header">
-                        <h1 class="page-header">
-                            报名表{大学} <small>Welcome 列表预览</small>
-                        </h1>
-						<ol class="breadcrumb">
-					  <li><a href="#">Home</a></li>
-					  <li class="active">报名表</li>
-					  <li ><a href="{{url_for('static',filename=)}}" download="">导出exle表</a></li>
-					</ol>
+<body class="BodyBackground" onload="createCode()">
 
+<!-- preloader -->
+<div id="preloader">
+	<img src="{{ url_for('static', filename='home/img/preloader.gif') }}" alt="Preloader">
+</div>
+<!-- end preloader -->
+
+<!--
+Fixed Navigation
+==================================== -->
+<header id="navigation" class="navbar-fixed-top navbar">
+	<div class="container">
+		<div class="navbar-header">
+			<!-- responsive nav button -->
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<i class="fa fa-bars fa-2x"></i>
+			</button>
+			<!-- /responsive nav button -->
+			
+			<!-- logo -->
+			<a class="navbar-brand" href="#body">
+				<h1 id="logo">
+					<img src="{{ url_for('static', filename='home/img/logo.png') }}" alt="zzti">
+				</h1>
+			</a>
+			<!-- /logo -->
 		</div>
-            <div id="page-inner">
-
-                <div class="row">
-
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                2018HNCTF报名表
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <thead>
-                                            <tr style="text-align:center;">
-                                                <th style="text-align:center;vertical-align:middle;">学校</th>
-                                                <th style="text-align:center;vertical-align:middle;">序号</th>
-                                                <th style="text-align:center;vertical-align:middle;">队名</th>
-                                                <th style="text-align:center;vertical-align:middle;">指导老师</th>
-                                                <th style="text-align:center;vertical-align:middle;">队员姓名</th>
-                                                <th>性别</th>
-                                                <th>专业/年级</th>
-                                                <th>衣服尺码</th>
-                                                <th>技能偏向</th>
-                                                <th>手机</th>
-                                                <th>邮箱</th>
-                                                <th>备注</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-	                                            <th></th>
-                                                <th></th>
-                                                <th>突然想吃鸡</th>
-                                                <th>三个字</th>
-                                                <th>三个字</th>
-                                                <th>男</th>
-                                                <th>计算机15</th>
-                                                <th>180</th>
-                                                <th>web</th>
-                                                <th>12345678911</th>
-                                                <th>123456789@aa.com</th>
-                                                <th>住房要求</th>
-                                            </tr>
-                                            <tr>
-                                                <th>中原工学院信息商务学院后面很长</th>
-                                                <th>序号</th>
-                                                <th>你不知道我的队名可是很长</th>
-                                                <th>指导老师</th>
-                                                <th>队员姓名</th>
-                                                <th>性别</th>
-                                                <th>专业/年级</th>
-                                                <th>衣服尺码</th>
-                                                <th>技能偏向</th>
-                                                <th>手机</th>
-                                                <th>邮箱</th>
-                                                <th>我就想加一串很long很long的 </th>
-                                            </tr>
-                                            <tr>
-                                                <th>学校</th>
-                                                <th>序号</th>
-                                                <th>队名</th>
-                                                <th>指导老师</th>
-                                                <th>队员姓名</th>
-                                                <th>性别</th>
-                                                <th>专业/年级</th>
-                                                <th>衣服尺码</th>
-                                                <th>技能偏向</th>
-                                                <th>手机</th>
-                                                <th>邮箱</th>
-                                                <th>备注</th>
-                                            </tr>
-                                            <tr>
-                                                <th>学校</th>
-                                                <th>序号</th>
-                                                <th>队名</th>
-                                                <th>指导老师</th>
-                                                <th>队员姓名</th>
-                                                <th>性别</th>
-                                                <th>专业/年级</th>
-                                                <th>衣服尺码</th>
-                                                <th>技能偏向</th>
-                                                <th>手机</th>
-                                                <th>邮箱</th>
-                                                <th>备注</th>
-                                            </tr>
-                                            <tr>
-                                                <th>学校</th>
-                                                <th>序号</th>
-                                                <th>队名</th>
-                                                <th>指导老师</th>
-                                                <th>队员姓名</th>
-                                                <th>性别</th>
-                                                <th>专业/年级</th>
-                                                <th>衣服尺码</th>
-                                                <th>技能偏向</th>
-                                                <th>手机</th>
-                                                <th>邮箱</th>
-                                                <th>备注</th>
-                                            </tr>
-                                            <tr>
-                                                <th>学校</th>
-                                                <th>序号</th>
-                                                <th>队名</th>
-                                                <th>指导老师</th>
-                                                <th>队员姓名</th>
-                                                <th>性别</th>
-                                                <th>专业/年级</th>
-                                                <th>衣服尺码</th>
-                                                <th>技能偏向</th>
-                                                <th>手机</th>
-                                                <th>邮箱</th>
-                                                <th>备注</th>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- /. ROW  -->
-
-            </div>
-            <!-- /. PAGE INNER  -->
-        </div>
-        <!-- /. PAGE WRAPPER  -->
+		
+		<nav class="collapse navbar-collapse navbar-right" role="navigation">
+			<ul class="nav navbar-nav">
+				<li class="current"><a href="{{ url_for('Index') }}">主页</a></li>
+				<li><a href="{{ url_for('Index') }}#features">比赛时间</a></li>
+				<li><a href="{{ url_for('Index') }}#rule">比赛规则</a></li>
+				<li><a href="{{ url_for('Index') }}#works">赛前热身</a></li>
+				<li><a href="{{ url_for('Index') }}#">图文直播</a></li>
+				<li class="has-dropdown">
+					<a href="//#">竞赛通知</a>
+				</li>
+				<li><a href="{{ url_for('Index') }}#facts">关于我们</a></li>
+				{% if teacher %}
+				<li class="dropdown">
+					<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					   aria-expanded="false">{{ teacher.teachername }}<b class="caret"></b> </a>
+					<ul class="dropdown-menu page  ">
+						<li><a class=" pageword" href="{{ url_for('Profile') }}">个人中心</a></li>
+						<li><a class=" pageword" href="{{url_for('MyPage')}}">注册团队</a></li>
+						<li><a class=" pageword" href="{{url_for('AllMessage',schoolid=teacher.school_teacher_id) }}">队伍信息</a></li>
+						<li><a class=" pageword" href="{{url_for('ModifyPassword')}}">修改密码</a></li>
+						{#
+						<li role="separator" class="divider"></li>
+						#}
+						<li><a href="#"></a></li>
+						{#
+						<li role="separator" class="divider"></li>
+						#}
+						{#
+						<li><a href="#"></a></li>
+						#}
+					</ul>
+				</li>
+				<li class="btn-cta"><a href="{{ url_for('Logout') }}"><span>注销</span></a></li>
+				{% if teacher.teacheradmin=='1' %}
+				<li class="btn-cta"><a href="{{ url_for('admin_manage_teacher') }}"><span>管理员</span></a></li>
+				{% endif %}
+				{% else %}
+				<li class="btn-cta"><a href="{{ url_for('Login') }}"><span>登录</span></a></li>
+				<li class="btn-cta"><a href="{{ url_for('Regist') }}"><span>注册</span></a></li>
+				{% endif %}
+			</ul>
+		
+		</nav>
+	
+	</div>
+</header>
+<!--
+End Fixed Navigation
+==================================== -->
 
 
+<div class="main">
+	
+	<!--/. NAV TOP  -->
+	<nav class="navbar-default navbar-side" role="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav" id="main-menu">
+				
+				
+				<li>
+					<a href="{{ url_for('Profile') }}"><i class="fa fa-desktop"></i> 个人信息</a>
+				</li>
+				<li>
+					<a href="{{ url_for('AllMessage',schoolid=teacher.school_teacher_id) }}" class="active-menu"><i
+							class="fa fa-sitemap"></i> 队伍信息总揽</a>
+				
+				</li>
+				
+				<li>
+					<a href="{{ url_for('MyPage') }}"><i class="fa fa-qrcode"></i> 个人带队<span
+							class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						{% for t in teams %}
+						<li>
+							<a href="{{ url_for('team',id=t.id) }}" >{{ t.teamname }}</a>
+						</li>
+						{%endfor%}
+					</ul>
+			</ul>
+		</div>
+	</nav>
+</div>
 
-    {% endblock %}
+
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="header">
+			<h1 class="page-header" style="color: #1a97d7">
+				
+				安恒杯参赛成员报名表
+				<small>Welcome To HNCTF2018</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#">主页</a></li>
+				<li class="active">报名表</li>
+				<li><a href="{{url_for('static',filename='exle/test2.xls')}}" download="test2.xls">导出exle表</a></li>
+			</ol>
+		
+		</div>
+		
+		<div id="page-inner">
+			
+			<div class="row">
+				<div class="col-md-12">
+					<!-- Advanced Tables -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							安恒杯参赛人员总揽
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+									<thead>
+									<tr style="text-align:center;">
+										<th style="text-align:center;vertical-align:middle;">学校</th>
+										<th style="text-align:center;vertical-align:middle;">序号</th>
+										<th style="text-align:center;vertical-align:middle;">队名</th>
+										<th style="text-align:center;vertical-align:middle;">指导老师</th>
+										<th style="text-align:center;vertical-align:middle;">队员姓名</th>
+										<th style="text-align:center;vertical-align:middle;">性别</th>
+										<th style="text-align:center;vertical-align:middle;">专业/年级</th>
+										<th style="text-align:center;vertical-align:middle;">衣服尺码</th>
+										<th style="text-align:center;vertical-align:middle;">技能偏向</th>
+										<th style="text-align:center;vertical-align:middle;">手机号</th>
+										<th style="text-align:center;vertical-align:middle;">邮箱</th>
+										<th style="text-align:center;vertical-align:middle;">备注</th>
+									</tr>
+									</thead>
+									<tbody>
+									{% for member in members %}
+									<tr>
+										<th style="text-align:center;vertical-align:middle;">{{member.Member_school.school}}</th>
+										<th></th>
+										<!--<th>{{(1)}}</th>-->
+										<th style="text-align:center;vertical-align:middle;">{{member.Member_team.teamname}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.Member_teacher.teachername}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.membername}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.membersex}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.membergrade}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.membersize}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.memberskill}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.memberphone}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.memberemail}}</th>
+										<th style="text-align:center;vertical-align:middle;">{{member.memberemail}}</th>
+									</tr>
+									{% endfor %}
+									
+									<thead>
+									<tr style="text-align:center;">
+										<th style="text-align:center;vertical-align:middle;"></th>
+										<th style="text-align:center;vertical-align:middle;"></th>
+										<th ></th>
+										<th style="text-align:center;vertical-align:middle;"></th>
+										<th ></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+									</tr>
+									</thead>
+									<thead>
+									<tr style="text-align:center;">
+										<th style="text-align:center;vertical-align:middle;">统计:</th>
+										<th style="text-align:center;vertical-align:middle;"></th>
+										<th >共{{teamlist|length}}支队伍</th>
+										<th style="text-align:center;vertical-align:middle;"></th>
+										<th >共{{members|length}}名队员</th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+									</tr>
+									</thead>
+								</table>
+							</div>
+						
+						</div>
+					</div>
+					<!--End Advanced Tables -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<a href="javascript:void(0);" id="back-top"><i class="fa fa-angle-up fa-3x"></i></a>
+
+<!-- Essential jQuery Plugins
+================================================== -->
+<!-- Main jQuery -->
+<script src="{{ url_for('static', filename='home/js/jquery-1.11.1.min.js') }}"></script>
+<!-- Single Page Nav -->
+<script src="{{ url_for('static', filename='home/js/jquery.singlePageNav.min.js') }}"></script>
+<!-- Twitter Bootstrap -->
+
+ <!--jquery.fancybox.pack -->
+<script src="{{ url_for('static', filename='home/js/jquery.fancybox.pack.js') }}"></script>
+<!-- jquery.mixitup.min -->
+<script src="{{ url_for('static', filename='home/js/jquery.mixitup.min.js') }}"></script>
+<!-- jquery.parallax -->
+<script src="{{ url_for('static', filename='home/js/jquery.parallax-1.1.3.js') }}"></script>
+<!-- jquery.countTo -->
+<script src="{{ url_for('static', filename='home/js/jquery-countTo.js') }}"></script>
+<!-- jquery.appear -->
+<script src="{{ url_for('static', filename='home/js/jquery.appear.js') }}"></script>
+<!-- Contact form validation -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+<!-- jquery easing -->
+<script src="{{ url_for('static', filename='home/js/jquery.easing.min.js') }}"></script>
+<!-- jquery easing -->
+<script src="{{ url_for('static', filename='home/js/wow.min.js') }}"></script>
+<script>
+    var wow = new WOW({
+            boxClass: 'wow',      // animated element css class (default is wow)
+            animateClass: 'animated', // animation css class (default is animated)
+            offset: 120,          // distance to the element when triggering the animation (default is 0)
+            mobile: false,       // trigger animations on mobile devices (default is true)
+            live: true        // act on asynchronously loaded content (default is true)
+        }
+    );
+    wow.init();
+</script>
+<!-- Custom Functions -->
+<script src="{{ url_for('static', filename='home/js/custom.js') }}"></script>
+
+<script src="{{ url_for('static',filename='assets/js/bootstrap.min.js')}}"></script>
+<script src="{{ url_for('static',filename='assets/js/jquery-1.10.2.js')}}"></script>
+<!--<script src="{{ url_for('static',filename='assets/js/jquery.metisMenu.js')}}"></script>-->
+<script src="{{ url_for('static',filename='assets/js/dataTables/jquery.dataTables.js')}}"></script>
+<script src="{{ url_for('static',filename='assets/js/dataTables/dataTables.bootstrap.js')}}"></script>
+
+    <!-- Metis Menu Js -->
+
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+    </script>
+         <!-- Custom Js -->
+
+<script src="{{ url_for('static',filename='assets/js/custom-scripts.js')}}"></script>
+</body>
+</html>

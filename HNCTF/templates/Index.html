@@ -1,569 +1,515 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
-    <head>
-	    <!-- meta charec set -->
-        <meta charset="utf-8">
-		<!-- Always force latest IE rendering engine or request Chrome Frame -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<!-- Page Title -->
-        <title>首页-HNCTF</title>
-		<!-- Mobile Specific Meta -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- Google Font -->
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-		<!-- CSS
-		================================================== -->
-        <link rel="shortcur icon" href="{{ url_for('static',filename='home/img/ico/1.png')}}">
-		<!-- Fontawesome Icon font -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='home/css/font-awesome.min.css') }}">
-		<!-- Twitter Bootstrap css -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='home/css/bootstrap.min.css') }}">
-		<!-- jquery.fancybox  -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='home/css/jquery.fancybox.css') }}">
-		<!-- animate -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='home/css/animate.css') }}">
-		<!-- Main Stylesheet -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='home/css/main.css') }}">
-		<!-- media-queries -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='home/css/media-queries.css') }}">
-		<!-- Modernizer Script for old Browsers -->
-        <script src="{{ url_for('static', filename='home/js/modernizr-2.6.2.min.js') }}"></script>
-    </head>
+<!--[if lt IE 7]>
+<html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<!-- meta charec set -->
+	<meta charset="utf-8">
+	<!-- Always force latest IE rendering engine or request Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!-- Page Title -->
+	<title>首页-HNCTF</title>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Google Font -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<!-- CSS
+	================================================== -->
+	<link rel="shortcur icon" href="{{ url_for('static',filename='home/img/ico/1.png')}}">
+	<!-- Fontawesome Icon font -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/font-awesome.min.css') }}">
+	<!-- Twitter Bootstrap css -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/bootstrap.min.css') }}">
+	<!-- jquery.fancybox  -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/jquery.fancybox.css') }}">
+	<!-- animate -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/animate.css') }}">
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/main.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/style.css') }}">
+	<!-- media-queries -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='home/css/media-queries.css') }}">
+	<!-- Modernizer Script for old Browsers -->
+	<script src="{{ url_for('static', filename='home/js/jquery-1.7.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='home/js/ui.js') }}"></script>
+	<script src="{{ url_for('static', filename='home/js/modernizr-2.6.2.min.js') }}"></script>
+	<style>
+		.alert {
+			width: auto;
+			text-align: center;
+			color: #fff;
+			cursor: pointer;
+			
+		}
+	
+	
+	</style>
+</head>
 
-    <body id="body">
+<body id="body">
 
-		<!-- preloader -->
-		<div id="preloader">
-			<img src="{{ url_for('static', filename='home/img/preloader.gif') }}" alt="Preloader">
+<!-- preloader -->
+<div id="preloader">
+	<img src="{{ url_for('static', filename='home/img/preloader.gif') }}" alt="Preloader">
+</div>
+<!-- end preloader -->
+
+<!--
+Fixed Navigation
+==================================== -->
+<header id="navigation" class="navbar-fixed-top navbar">
+	<div class="container">
+		<div class="navbar-header">
+			<!-- responsive nav button -->
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<i class="fa fa-bars fa-2x"></i>
+			</button>
+			<!-- /responsive nav button -->
+			
+			<!-- logo -->
+			<a class="navbar-brand" href="/">
+				<h1 id="logo">
+					<img src="{{ url_for('static', filename='home/img/logo.png') }}" alt="zzti">
+				</h1>
+			</a>
+			<!-- /logo -->
 		</div>
-		<!-- end preloader -->
-
-        <!--
-        Fixed Navigation
-        ==================================== -->
-        <header id="navigation" class="navbar-fixed-top navbar">
-            <div class="container">
-                <div class="navbar-header">
-                    <!-- responsive nav button -->
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <i class="fa fa-bars fa-2x"></i>
-                    </button>
-					<!-- /responsive nav button -->
-
-					<!-- logo -->
-                    <a class="navbar-brand" href="#body">
-						<h1 id="logo">
-							<img src="{{ url_for('static', filename='home/img/logo.png') }}" alt="zzti">
-						</h1>
-					</a>
-					<!-- /logo -->
-                </div>
-
-				<!-- main nav -->
-                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
-                     <ul  class="nav navbar-nav">
-                         <li class="current"><a href="{{ url_for('Index') }}">主页</a></li>
-                         <li><a href="#features">比赛时间</a></li>
-                         <li><a href="#rule">比赛规则</a></li>
-	                     <li><a href="#works">赛前热身</a></li>
-                         <li><a href="#">图文直播</a></li>
-						 <li class="has-dropdown">
-                             <a href="#">竞赛通知</a>
-						 </li>
-                         <li><a href="#facts">关于我们</a></li>
-                         {% if teacher %}
-	                         <li class="dropdown">
-					              <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ teacher.teachername }}<b class="caret"></b> </a>
-				                <ul class="dropdown-menu page  ">
-						            <li ><a class=" pageword" href="{{ url_for('Profile') }}">个人中心</a></li>
-					                 <li><a class=" pageword" href="{{ url_for('RegisterTeam') }}">注册团队</a></li>
-						            <li><a class=" pageword" href="{{ url_for('AllMessage') }}">修改密码</a></li>
-{#						            <li role="separator" class="divider"></li>#}
-						            <li><a href="#"> 注销</a></li>
-{#						            <li role="separator" class="divider"></li>#}
-{#						            <li><a href="#">其他</a></li>#}
-				                </ul>
-				              </li>
-                             <li class="btn-cta"><a href="{{ url_for('Logout') }}"><span>注销</span></a></li>
-                         {% else %}
-						     <li class="btn-cta"><a href="{{ url_for('Login') }}"><span>登录</span></a></li>
-                             <li class="btn-cta"><a href="{{ url_for('Regist') }}"><span>注册</span></a></li>
-                         {% endif %}
-                     </ul>
-
-                 </nav>
-				<!-- /main nav -->
-
-            </div>
-        </header>
-        <!--
-        End Fixed Navigation
-        ==================================== -->
-
-            <!--
-    Home Slider
-    ==================================== -->
-
-    <section id="slider">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-
-            <!-- Indicators bullet -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            </ol>
-            <!-- End Indicators bullet -->
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-
-                <!-- single slide -->
-                <div class="item active" style="background-image: url({{ url_for('static', filename='home/img/banner3.jpg') }});">
-                    <div class="carousel-caption">
-						 <h3 data-wow-duration="1000ms" class="wow slideInLeft animated">“安恒杯”</h3>
-                        <h2 data-wow-duration="700ms" data-wow-delay="500ms" class="wow bounceInDown animated">河南省第三届HNCTF2018大赛</h2>
-
-                        <h3 data-wow-duration="1000ms" class="wow slideInLeft animated"><a href="http://www.zut.edu.cn/"><span class="color">中原工学院</span></a> 主办</h3>
-                        <p data-wow-duration="1000ms" class="wow slideInRight animated">We are a team of professionals</p>
-
-
-                    </div>
-                </div>
-                <!-- end single slide -->
-
-                <!-- single slide -->
-                <div class="item" style="background-image: url({{ url_for('static', filename='home/img/banner.jpg') }});">
-                    <div class="carousel-caption">
-                        <h2 data-wow-duration="500ms" data-wow-delay="500ms" class="wow bounceInDown animated">欢迎报名 第三届 安恒杯</h2>
-						<br>
-                        <h3 data-wow-duration="500ms" class="wow slideInLeft animated">中原工学院站
-	                        <a href="{{ url_for('RegisterTeam') }}"><span  class="color"> 前去报名</span> </a>
-                        </h3>
-	                    <br>
-                        <p data-wow-duration="500ms" class="wow slideInRight animated">We are a team of professionals</p>
-
-
-                    </div>
-                </div>
-                <!-- end single slide -->
-
-            </div>
-            <!-- End Wrapper for slides -->
-
-        </div>
-    </section>
-
-    <section id="features" class="features">
-        <div class="container">
-            <div class="row">
-
-                <div class="sec-title text-center mb50 wow bounceInDown animated" data-wow-duration="500ms">
-                    <h2>时间安排</h2>
-                    <div class="devider"><i class="fa fa-clock-o fa-lg"></i></div>
-                </div>
-
-                <!-- service item -->
-                <div class="col-md-4 wow fadeInLeft" data-wow-duration="500ms">
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fa fa-clock-o fa-2x"></i>
-                        </div>
-
-                        <div class="service-desc">
-                            <h3>2018年4月30日</h3>
-                            <p>(1).8：00 截止报名<br>(2).9：00-12：00 核对报名信息<br></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end service item -->
-
-                <!-- service item -->
-                <div class="col-md-4 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms">
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fa fa-clock-o fa-2x"></i>
-                        </div>
-
-                        <div class="service-desc">
-                            <h3>2018年 5月5日</h3>
-                            <p>(1).9:00-10:00: 开幕式<br>(2). 10:00-10:20: 宣布比赛须知、比赛规则<br>
-                                (3).10:20-18:00：解题赛<br>(4).12:00-13:00: 午餐</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end service item -->
-
-                <!-- service item -->
-                <div class="col-md-4 wow fadeInRight" data-wow-duration="500ms"  data-wow-delay="900ms">
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fa fa-clock-o fa-2x"></i>
-                        </div>
-
-                        <div class="service-desc">
-                            <h3>2018年 5月6日</h3>
-                            <p>(1).9:00-10:00: 宣布比赛须知、比赛规则<br>(2). 10:00-16:00: 对抗赛<br>
-                                (3).12:00-13:00：午餐<br>(4).16:00-18:00: 颁奖典礼、闭幕式</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end service item -->
-
-            </div>
-        </div>
-    </section>
-
-    <!--
-    End Features
-    ==================================== -->
-
-
-    <!--
-    Our Works
-    ==================================== -->
-
-    <section id="rule" class="works clearfix">
-        <div class="container">
-            <div class="row1">
-
-                <div class="sec-title text-center">
-                    <h2>比赛规则</h2>
-                    <div class="devider"><i class="fa fa-heart-o fa-lg"></i></div>
-                </div>
-                <div class="sec-sub-title text-center">
-                    <p> 请队员们遵守比赛规则</p>
-                </div>
-	            <div class="comment">
-
-		            <p>1)、  参赛选手建议自带笔记本电脑、电源、资料（包括书籍、电子资料）； </p><br>
-		            <p>2) 、 在比赛开始前签到，并提供有效证件（身份证和学生证）以核实身份信息； </p><br>
-		            <p>3) 、 比赛正式开始后迟到15分钟者不得进入比赛场地； </p><br>
-		            <p>4) 、 比赛期间不允许参赛者访问互联网，禁止以任何形式请求援助或交流比赛内容及过关攻略，含:QQ、微信、飞信等IM及手机、对讲机等通信设备 </p><br>
-		            <p>5) 、 遵守大赛纪律，不得在比赛场地内大声喧哗。 </p><br>
-		            <p>6) 、 禁止任何对比赛相关平台的暴力破解和攻击，违规者一律取消参资格；</p><br>
-		            <p>7) 、 禁止任何针对参赛对手的网络攻击行为，违规者一律取消参赛资格； </p><br>
-		            <p>8) 、 比赛过程中不能相互关流，禁止参赛选手之间分享任何解题思路及flag，违规者一律取消参赛资格；</p><br>
-		            <p>9) 、 使用网络扫描器（例如Nikto或者Nessus）不会对解题有帮助; </p><br>
-	            </div>
-            </div>
-        </div>
-    </section>
-
-		<section id="works" class="works clearfix">
-        <div class="container">
-            <div class="row">
-
-	            <div class="sec-title text-center">
-                    <h2>赛前热身</h2>
-                    <div class="devider"><i class="fa fa-heart-o fa-lg"></i></div>
-                </div>
-
-                <div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">
-                    <ul class="text-center">
-                        <li><a href="javascript:;" data-filter="all" class="active filter">All</a></li>
-                        <li><a href="javascript:;" data-filter=".branding" class="filter">Web</a></li>
-                        <li><a href="javascript:;" data-filter=".web" class="filter">Reverse</a></li>
-                        <li><a href="javascript:;" data-filter=".logo-design" class="filter">Misc</a></li>
-                        <li><a href="javascript:;" data-filter=".photography" class="filter">Crypto</a></li>
-                        <li><a href="javascript:;" data-filter=".photography" class="filter">Pwn</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="project-wrapper">
-
-            <figure class="mix work-item branding">
-                <img src="{{ url_for('static', filename='home/img/works/background.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-1.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题</p>
-                </figcaption>
-            </figure>
-
-            <figure class="mix work-item web">
-                <img src="{{ url_for('static', filename='home/img/works/5.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-2.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题<p>
-                </figcaption>
-            </figure>
-
-            <figure class="mix work-item logo-design">
-                <img src="{{ url_for('static', filename='home/img/works/background.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-3.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题</p>
-                </figcaption>
-            </figure>
-
-            <figure class="mix work-item photography">
-                <img src="{{ url_for('static', filename='home/img/works/1.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-4.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题</p>
-                </figcaption>
-            </figure>
-
-            <figure class="mix work-item branding">
-                <img src="{{ url_for('static', filename='home/img/works/2.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-5.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题</p>
-                </figcaption>
-            </figure>
-
-            <figure class="mix work-item web">
-                <img src="{{ url_for('static', filename='home/img/works/3.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-6.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题</p>
-                </figcaption>
-            </figure>
-
-            <figure class="mix work-item logo-design">
-                <img src="{{ url_for('static', filename='home/img/works/2.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-7.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题</p>
-                </figcaption>
-            </figure>
-
-            <figure class="mix work-item photography">
-                <img src="{{ url_for('static', filename='home/img/works/1.jpg') }}" alt="">
-                <figcaption class="overlay">
-                    <a class="fancybox" rel="works" title="Write Your Image Caption Here" href="{{ url_for('static', filename='home/img/works/item-8.jpg') }}">
-                        <i class="fa fa-eye fa-lg"></i></a>
-                    <h4>这是题型</h4>
-                    <p>请按要求做题</p>
-                </figcaption>
-            </figure>
-
-        </div>
-
-
-    </section>
-    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >企业网站模板</a></div>
-
-    <!--
-    End Our Works
-    ==================================== -->
-
-
-    <!--
-    Some fun facts
-    ==================================== -->
-
-    <section id="facts" class="facts">
-        <div class="parallax-overlay">
-            <div class="container">
-                <div class="row number-counters">
-
-                    <div class="sec-title text-center mb50 wow rubberBand animated" data-wow-duration="1000ms">
-                        <h2>关于我们</h2>
-                        <div class="devider"><i class="fa fa-heart-o fa-lg"></i></div>
-                    </div>
-
-                    <!-- first count item -->
-                    <div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms">
-                        <div class="counters-item">
-                            <i class="fa fa-clock-o fa-3x"></i>
-                            <strong data-to="10000">0</strong>
-                            <!-- Set Your Number here. i,e. data-to="56" -->
-                            <p>team</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <div class="counters-item">
-                            <i class="fa fa-users fa-3x"></i>
-                            <strong data-to="120">0</strong>
-                            <!-- Set Your Number here. i,e. data-to="56" -->
-                            <p>Satisfied Clients</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="600ms">
-                        <div class="counters-item">
-                            <i class="fa fa-rocket fa-3x"></i>
-                            <strong data-to="50">0</strong>
-                            <!-- Set Your Number here. i,e. data-to="56" -->
-                            <p> 我们斩获的项目 </p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="900ms">
-                        <div class="counters-item">
-                            <i class="fa fa-trophy fa-3x"></i>
-                            <strong data-to="20">0</strong>
-                            <!-- Set Your Number here. i,e. data-to="56" -->
-                            <p>我们获得的奖杯</p>
-                        </div>
-                    </div>
-                    <!-- end first count item -->
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--
-    End Some fun facts
-    ==================================== -->
-
-
-    <footer id="footer" class="footer">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-3 col-sm-6 col-xs-12 wow fadeInUp animated" data-wow-duration="500ms">
-                    <div class="footer-single">
-                        <img src="{{ url_for('static', filename='home/img/footer-logo.png') }}" alt="中原工学院">
-                        <p>此赛解释权归中原工学院所有</p>
-                    </div>
-                </div>
-
-
-                <div class="col-md-3 col-sm-6 col-xs-12 wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="600ms">
-                    <div class="footer-single">
-                        <h6>联系我们</h6>
-                        <ul>
-                            <li><a href="#">电话：</a></li>
-                            <li><a href="#">QQ：</a></li>
-                            <li><a href="#">电子邮箱：</a></li>
-                            <li><a href="#">参会报名：</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p><span>[河南省新郑市双湖经济开发区淮河路一号中原工学院]
-			</span><br><span>河南省信息与安全攻防大赛2017 Copyright &copy; 2017 HNCTF
+		
+		<!-- main nav -->
+		<nav class="collapse navbar-collapse navbar-right" role="navigation">
+			<ul class="nav navbar-nav">
+				<li class="current"><a href="#body">主页</a></li>
+				<li><a href="#organization">大赛组织</a></li>
+				<li><a href="#target">大赛目标</a></li>
+				<li class="has-dropdown"><a href="#time">行程安排</a></li>
+				<li><a href="#rule">比赛规则</a></li>
+				<li><a href="#prize">奖项设置</a></li>
+				<li><a class="alert open" onclick="mizhu.open(400, 400, '竞赛通知文件下载', 'Download'  );"
+				>竞赛通知</a></li>
+				{% if teacher %}
+				<li class="dropdown">
+					<a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					   aria-expanded="false">{{ teacher.teachername }}<b class="caret"></b> </a>
+					<ul class="dropdown-menu page  ">
+						<li><a class=" pageword" href="{{ url_for('Profile') }}">个人中心</a></li>
+						<li><a class=" pageword" href="{{url_for('MyPage')}}">注册团队</a></li>
+						<li><a class=" pageword" href="{{url_for('AllMessage',schoolid=teacher.school_teacher_id) }}">队伍信息</a></li>
+						<li><a class=" pageword" href="{{url_for('ModifyPassword')}}">修改密码</a></li>
+						{#
+						<li role="separator" class="divider"></li>
+						#}
+						
+						{#
+						<li role="separator" class="divider"></li>
+						#}
+						{#
+						<li><a href="#">其他</a></li>
+						#}
+					</ul>
+				</li>
+				<li class="btn-cta"><a href="{{ url_for('Logout') }}"><span>注销</span></a></li>
+				{% if teacher.teacheradmin=='1' %}
+	                     <li class="btn-cta"><a href="{{ url_for('admin_manage_teacher') }}"><span>管理员</span></a></li>
+	                     {% endif %}
+				
+				{% else %}
+				<li class="btn-cta"><a href="{{ url_for('Login') }}"><span>登录</span></a></li>
+				<li class="btn-cta"><a href="{{ url_for('Regist') }}"><span>注册</span></a></li>
+				{% endif %}
+			</ul>
+		
+		</nav>
+		<!-- /main nav -->
+	
+	</div>
+</header>
+<!--
+End Fixed Navigation
+==================================== -->
+
+<!--
+Home Slider
+==================================== -->
+<section id="slider">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		<!-- Indicators bullet -->
+		<ol class="carousel-indicators">
+			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+		</ol>
+		<!-- End Indicators bullet -->
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner" role="listbox">
+			
+			<!-- single slide -->
+			<div class="item active"
+			     style="background-image: url({{ url_for('static', filename='home/img/banner3.jpg') }});">
+				<div class="carousel-caption">
+					<h3 data-wow-duration="1000ms" class="wow slideInLeft animated">“安恒杯”</h3>
+					<h2 data-wow-duration="700ms" data-wow-delay="500ms" class="wow bounceInDown animated">
+						河南省第三届信息安全与攻防技术大赛</h2>
+					
+					<h3 data-wow-duration="1000ms" class="wow slideInLeft animated">
+						<a href="http://www.zut.edu.cn/" target="new_window"><span class="color">中原工学院</span></a></h3>
+					<p data-wow-duration="1000ms" class="wow slideInRight animated">Welcome To HNCTF2018 </p>
+				
+				
+				</div>
+			</div>
+			<!-- end single slide -->
+			
+			<!-- single slide -->
+			<div class="item" style="background-image: url({{ url_for('static', filename='home/img/banner.jpg') }});">
+				<div class="carousel-caption">
+					<h2 data-wow-duration="500ms" data-wow-delay="500ms" class="wow bounceInDown animated">欢迎报名 第三届
+						安恒杯 </h2>
+					<br>
+					<h3 data-wow-duration="500ms" class="wow slideInLeft animated">线上预赛
+						<a href="https://www.91ctf.com/match/CTF481/" target="view_window"><span
+								class="color"> 前去报名</span> </a>
+					</h3>
+					<br>
+					<p data-wow-duration="500ms" class="wow slideInRight animated">Welcome To HNCTF2018</p>
+				
+				
+				</div>
+			</div>
+			<!-- end single slide -->
+		
+		</div>
+		<!-- End Wrapper for slides -->
+	</div>
+</section>
+
+<section id="organization" class="facts2">
+	<div class="parallax-overlay">
+		<div class="container ">
+			<div class="row number-counters">
+				
+				
+				<div class="sec-title text-center mb50 wow bounceInDown animated" data-wow-duration="500ms">
+					<h2>大赛组织</h2>
+					<div class="devider"><i class="fa fa-bank fa-lg"></i></div>
+				</div>
+				
+				<!-- service item -->
+				<div class="col-md-3 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="500ms"
+				     style="padding: 0">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-bank fa-2x"></i>
+						</div>
+						
+						<div class=" counters-item">
+							<br>
+							<h3 style="margin-left: 72px">指导单位</h3>
+							<p style="margin-left: 72px"><span class="color">河南省公安厅</span><br></p>
+							<p style="margin-left: 72px"><span class="color">河南省工业和信息化委员会</span><br></p>
+							<p style="margin-left: 72px"><span class="color">河南省教育厅</span><br></p>
+						</div>
+					</div>
+				</div>
+				<!-- end service item -->
+				
+				<div class="col-md-3 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="1000ms"
+				     style="padding: 0">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-bank fa-2x"></i>
+						</div>
+						
+						<div class="counters-item">
+							<br>
+							<h3 style="margin-left: 72px">主办单位</h3>
+							<p style="margin-left: 72px"><span class="color">河南省计算机学会</span><br></p>
+						</div>
+					</div>
+				</div>
+				
+				<!-- service item -->
+				<div class="col-md-3 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="1500ms"
+				     style="padding: 0">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-bank fa-2x"></i>
+						</div>
+						<div class="counters-item">
+							<br>
+							<h3 style="margin-left: 72px">承办单位</h3>
+							<p style="margin-left: 72px"><span class="color">中原工学院</span><br></p>
+						</div>
+					</div>
+				</div>
+				<!-- end service item -->
+				<!-- service item -->
+				<div class="col-md-3 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="2000ms"
+				     style="padding: 0">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-bank fa-2x"></i>
+						</div>
+						<div class="counters-item">
+							<br>
+							<h3 style="margin-left: 72px">协办单位</h3>
+							<p style="margin-left: 72px"><span class="color">杭州安恒信息技术有限公司</span><br></p>
+						</div>
+					</div>
+				</div>
+				<!-- end service item -->
+			
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="target" class="facts">
+	<div class="parallax-overlay">
+		<div class="container">
+			<div class="row number-counters">
+				
+				<div class="sec-title text-center">
+					<h2>大赛目标</h2>
+					<div class="devider"><i class="fa fa-book fa-lg"></i></div>
+				</div>
+				<div class=" counters-item " style="margin-left: 290px">
+					
+					<p><br> 为进一步加强河南省高等学校网络安全人才培养和学科建设，促进社会对网络与信息安全<br>
+						<br> 知识的了解与普及，激发学生学习网络与信息安全技术的积极性,培养学生的创新意识、协<br>
+						<br>作精神，提高从业人员应用网络与信息安全知识解决实际问题的能力，为校企交流、人才<br>
+						<br>培养与选拔、推荐优秀的网络安全人才提供平台。 </p><br>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="time" class="features">
+	<div class="parallax-overlay">
+		<div class="container">
+			<div class="row number-counters">
+				
+				<div class="sec-title text-center mb50 wow bounceInDown animated" data-wow-duration="500ms">
+					<h2>赛程安排</h2>
+					<div class="devider"><i class="fa fa-clock-o fa-lg"></i></div>
+				</div>
+				<div class="col-md-3 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="500ms"
+				     style="padding-left: 0">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-clock-o fa-2x"></i>
+						</div>
+						<div class="counters-item">
+							<br>
+							<h3 style="margin-left: 72px">预赛报名</h3>
+							<p>时间：<span class="color">2018年4月8日-16日</span><br><br>报名地址：<a
+									href='https://www.91ctf.com/match/CTF481/<br'><span class="color"> 前去报名</span></a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 wow fadeInDown" data-wow-duration="500ms" data-wow-delay="1000ms"
+				     style="padding-left: 0">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-clock-o fa-2x"></i>
+						</div>
+						<div class="counters-item">
+							<br>
+							<h3 style="margin-left: 72px">预赛</h3>
+							<p>时间：<span class="color">2018年4月21日</span><br><br>线上解题模式( 预赛<span class="color">排名前十</span>的队伍以及受邀队伍进入决赛)
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="1500ms"
+				     style="padding-left: 0 ">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-clock-o fa-2x"></i>
+						</div>
+						<div class="counters-item">
+							<br>
+							<h3 style="margin-left: 72px">决赛</h3>
+							<p>时间：<span class="color">2018年5月中旬</span><br><br>线下攻防对抗模式<br>地点：中原工学院龙湖校区</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-3 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="2000ms"
+				     style="padding-left: 0">
+					<div class="service-item">
+						<div class="service-icon">
+							<i class="fa fa-clock-o fa-2x"></i>
+						</div>
+						<div class="counters-item">
+							<br>
+							<h3 style="margin-left: 72px">交流与颁奖</h3>
+							<p>时间：<span class="color">2018年5月中旬</span><br><br>优秀队伍竞赛经验交流分享</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="rule" class="facts">
+	<div class="parallax-overlay">
+		<div class="container">
+			<div class="row number-counters">
+				
+				<div class="sec-title text-center">
+					<h2>比赛规则</h2>
+					<div class="devider"><i class="fa fa-laptop fa-lg"></i></div>
+				</div>
+				<div class="sec-sub-title text-center counters-item">
+					<p> 请队员们遵守比赛规则</p>
+				</div>
+				<div class=" counters-item" style="padding-left:260px ">
+					
+					<p>1)、 参赛选手建议自带笔记本电脑、电源、资料（包括书籍、电子资料）； </p><br>
+					<p>2) 、 在比赛开始前签到，并提供有效证件（身份证和学生证）以核实身份信息； </p><br>
+					<p>3) 、 比赛正式开始后迟到15分钟者不得进入比赛场地； </p><br>
+					<p>4) 、 比赛期间不允许参赛者访问互联网，禁止以任何形式请求援助或交流比赛内容及过关攻略，含:QQ、微信、<br><br> 飞信等IM及手机、对讲机等通信设备 </p><br>
+					<p>5) 、 遵守大赛纪律，不得在比赛场地内大声喧哗。 </p><br>
+					<p>6) 、 禁止任何对比赛相关平台的暴力破解和攻击，违规者一律取消参资格；</p><br>
+					<p>7) 、 禁止任何针对参赛对手的网络攻击行为，违规者一律取消参赛资格； </p><br>
+					<p>8) 、 比赛过程中不能相互关流，禁止参赛选手之间分享任何解题思路及flag，违规者一律取消参赛资格；</p><br>
+					<p>9) 、 使用网络扫描器（例如Nikto或者Nessus）不会对解题有帮助; </p><br>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="prize" class="facts">
+	<div class="parallax-overlay">
+		<div class="container">
+			<div class="row number-counters">
+				
+				<div class="sec-title text-center mb50 wow rubberBand animated" data-wow-duration="1000ms">
+					<h2>奖项设置</h2>
+					<div class="devider"><i class="fa fa-heart-o fa-lg"></i></div>
+				</div>
+				
+				<!-- first count item -->
+				<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms">
+					<div class="counters-item">
+						<i class="fa fa-trophy  fa-4x" aria-hidden="true" style="color: #FFD110"></i>
+						
+						<strong data-to="3000">0</strong>
+						<!-- Set Your Number here. i,e. data-to="56" -->
+						<p>特等奖</p>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="300ms"
+				     data-wow-delay="300ms">
+					<div class="counters-item">
+						<i class="fa fa-trophy fa-4x" style="color: #C6E746"></i>
+						<strong data-to="1500">0</strong>
+						<!-- Set Your Number here. i,e. data-to="56" -->
+						<p>一等奖</p>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="100ms"
+				     data-wow-delay="600ms">
+					<div class="counters-item">
+						<i class="fa fa-trophy fa-4x" style="color: #B8B8B8"></i>
+						<strong data-to="600">0</strong>
+						<!-- Set Your Number here. i,e. data-to="56" -->
+						<p> 二等奖 </p>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="100ms"
+				     data-wow-delay="900ms">
+					<div class="counters-item">
+						<i class="fa fa-trophy fa-4x" style="color: #FFB88A"></i>
+						<strong data-to="300">0</strong>
+						<!-- Set Your Number here. i,e. data-to="56" -->
+						<p>三等奖</p>
+					</div>
+				</div>
+				<!-- end first count item -->
+			
+			</div>
+		</div>
+	</div>
+</section>
+
+<footer id="footer" class="footer">
+	<div class="container">
+		
+		<div class="col-md-3">
+			<ul>
+				<li><p class="center">联系我们</p></li>
+				<li><a href="#">冯老师：15836028043 </a></li>
+				<li><a href="#">电子邮箱：ctf@dropsec.xyz </a></li>
+			</ul>
+		</div>
+		<div class="col-md-3">
+			<ul>
+				<li><p class="center">友情连接</p></li>
+				<li><a href="http://www.dropsec.xyz/">http://www.dropsec.xyz/</a></li>
+			</ul>
+		</div>
+		<div class="col-md-6">
+			<p><span>[河南省新郑市双湖经济开发区淮河路一号中原工学院]
+			</span><br><span>河南省第三届信息与安全攻防技术大赛 Copyright &copy; 2018HNCTF
 			<a href="#" target="_blank" style="color:#FFFFFF">Power by 中原工学院&reg; &trade;&copy;</a></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+			</p>
+		</div>
+	</div>
+	</div>
+</footer>
+<script src="{{ url_for('static', filename='home/js/modernizr-2.6.2.min.js') }}"></script>
+<a href="javascript:void(0);" id="back-top"><i class="fa fa-angle-up fa-3x"></i></a>
+
+<!-- Essential jQuery Plugins
+================================================== -->
+<!-- Main jQuery -->
+<script src="{{ url_for('static', filename='home/js/jquery-1.11.1.min.js') }}"></script>
+<!-- Single Page Nav -->
+<script src="{{ url_for('static', filename='home/js/jquery.singlePageNav.min.js') }}"></script>
+<!-- Twitter Bootstrap -->
+<script src="{{ url_for('static', filename='home/js/bootstrap.min.js') }}"></script>
+<!-- jquery.fancybox.pack -->
+<script src="{{ url_for('static', filename='home/js/jquery.fancybox.pack.js') }}"></script>
+<!-- jquery.mixitup.min -->
+<script src="{{ url_for('static', filename='home/js/jquery.mixitup.min.js') }}"></script>
+<!-- jquery.parallax -->
+<script src="{{ url_for('static', filename='home/js/jquery.parallax-1.1.3.js') }}"></script>
+<!-- jquery.countTo -->
+<script src="{{ url_for('static', filename='home/js/jquery-countTo.js') }}"></script>
+<!-- jquery.appear -->
+<script src="{{ url_for('static', filename='home/js/jquery.appear.js') }}"></script>
+<!-- Contact form validation -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+<!-- jquery easing -->
+<script src="{{ url_for('static', filename='home/js/jquery.easing.min.js') }}"></script>
+<!-- jquery easing -->
+<script src="{{ url_for('static', filename='home/js/wow.min.js') }}"></script>
+<script>
+    var wow = new WOW({
+            boxClass: 'wow',      // animated element css class (default is wow)
+            animateClass: 'animated', // animation css class (default is animated)
+            offset: 120,          // distance to the element when triggering the animation (default is 0)
+            mobile: false,       // trigger animations on mobile devices (default is true)
+            live: true        // act on asynchronously loaded content (default is true)
+        }
+    );
+    wow.init();
+</script>
+<!-- Custom Functions -->
+<script src="{{ url_for('static', filename='home/js/custom.js') }}"></script>
 
 
-
-
-		<a href="javascript:void(0);" id="back-top"><i class="fa fa-angle-up fa-3x"></i></a>
-
-		<!-- Essential jQuery Plugins
-		================================================== -->
-		<!-- Main jQuery -->
-        <script src="{{ url_for('static', filename='home/js/jquery-1.11.1.min.js') }}"></script>
-		<!-- Single Page Nav -->
-        <script src="{{ url_for('static', filename='home/js/jquery.singlePageNav.min.js') }}"></script>
-		<!-- Twitter Bootstrap -->
-        <script src="{{ url_for('static', filename='home/js/bootstrap.min.js') }}"></script>
-		<!-- jquery.fancybox.pack -->
-        <script src="{{ url_for('static', filename='home/js/jquery.fancybox.pack.js') }}"></script>
-		<!-- jquery.mixitup.min -->
-        <script src="{{ url_for('static', filename='home/js/jquery.mixitup.min.js') }}"></script>
-		<!-- jquery.parallax -->
-        <script src="{{ url_for('static', filename='home/js/jquery.parallax-1.1.3.js') }}"></script>
-		<!-- jquery.countTo -->
-        <script src="{{ url_for('static', filename='home/js/jquery-countTo.js') }}"></script>
-		<!-- jquery.appear -->
-        <script src="{{ url_for('static', filename='home/js/jquery.appear.js') }}"></script>
-		<!-- Contact form validation -->
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
-		<!-- jquery easing -->
-        <script src="{{ url_for('static', filename='home/js/jquery.easing.min.js') }}"></script>
-		<!-- jquery easing -->
-        <script src="{{ url_for('static', filename='home/js/wow.min.js') }}"></script>
-		<script>
-			var wow = new WOW ({
-				boxClass:     'wow',      // animated element css class (default is wow)
-				animateClass: 'animated', // animation css class (default is animated)
-				offset:       120,          // distance to the element when triggering the animation (default is 0)
-				mobile:       false,       // trigger animations on mobile devices (default is true)
-				live:         true        // act on asynchronously loaded content (default is true)
-			  }
-			);
-			wow.init();
-		</script>
-		<!-- Custom Functions -->
-        <script src="{{ url_for('static', filename='home/js/custom.js') }}"></script>
-
-		<!--<script type="text/javascript">-->
-			<!--$(function(){-->
-				<!--/* ========================================================================= */-->
-				<!--/*	Contact Form-->
-				<!--/* ========================================================================= */-->
-
-				<!--$('#contact-form').validate({-->
-					<!--rules: {-->
-						<!--name: {-->
-							<!--required: true,-->
-							<!--minlength: 2-->
-						<!--},-->
-						<!--email: {-->
-							<!--required: true,-->
-							<!--email: true-->
-						<!--},-->
-						<!--message: {-->
-							<!--required: true-->
-						<!--}-->
-					<!--},-->
-					<!--messages: {-->
-						<!--name: {-->
-							<!--required: "come on, you have a name don't you?",-->
-							<!--minlength: "your name must consist of at least 2 characters"-->
-						<!--},-->
-						<!--email: {-->
-							<!--required: "no email, no message"-->
-						<!--},-->
-						<!--message: {-->
-							<!--required: "um...yea, you have to write something to send this form.",-->
-							<!--minlength: "thats all? really?"-->
-						<!--}-->
-					<!--},-->
-					<!--submitHandler: function(form) {-->
-						<!--$(form).ajaxSubmit({-->
-							<!--type:"POST",-->
-							<!--data: $(form).serialize(),-->
-							<!--url:"process.php",-->
-							<!--success: function() {-->
-								<!--$('#contact-form :input').attr('disabled', 'disabled');-->
-								<!--$('#contact-form').fadeTo( "slow", 0.15, function() {-->
-									<!--$(this).find(':input').attr('disabled', 'disabled');-->
-									<!--$(this).find('label').css('cursor','default');-->
-									<!--$('#success').fadeIn();-->
-								<!--});-->
-							<!--},-->
-							<!--error: function() {-->
-								<!--$('#contact-form').fadeTo( "slow", 0.15, function() {-->
-									<!--$('#error').fadeIn();-->
-								<!--});-->
-							<!--}-->
-						<!--});-->
-					<!--}-->
-				<!--});-->
-			<!--});-->
-		<!--</script>-->
-    </body>
+</body>
 </html>

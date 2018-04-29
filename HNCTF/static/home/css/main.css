@@ -94,7 +94,7 @@ span.color {
 
 body > section,
 .footer {
-	padding: 70px 0;
+	padding: 50px 0;
 }
 
 .sec-title {}
@@ -127,8 +127,8 @@ body > section,
 
 .devider:before,
 .devider:after {
-  content: "______________________";
-  color: #e6e8ea;
+  content: "_______________________________________________";
+  color: #e6e8ea; 
   position: relative;
   bottom: 6px;
 }
@@ -302,10 +302,24 @@ top: -8px;
 	Features
 ==========================================*/
 
-.features {
-  background-color: #f4f7f9;
+#features {
+	
+	background-color: rgba(6,32,51,.8);
+	background-attachment: fixed !important;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0;
 }
 
+.features .devider:before,
+.features .devider:after {
+	color: #737C85;
+}
+
+.features .devider i {
+	color: #fff;
+}
 .owl-controls {
   bottom: -45px;
   margin-top: 10px;
@@ -525,9 +539,98 @@ top: -8px;
 /*=========================================
 	Some fun facts
 ==========================================*/
+#organization {
+	
+	background-color: rgba(6,32,51,.8);
+	background-attachment: fixed !important;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0;
+}
 
+.organization .devider:before,
+.organization .devider:after {
+	color: #737C85;
+}
+
+.organization .devider i {
+	color: #fff;
+}
+#target {
+	
+	background-color: rgba(6,32,51,.8);
+	background-attachment: fixed !important;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0;
+}
+
+.target .devider:before,
+.target .devider:after {
+	color: #737C85;
+}
+
+.target .devider i {
+	color: #fff;
+}
+#time {
+	
+	background-color: rgba(6,32,51,.8);
+	background-attachment: fixed !important;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0;
+}
+
+.time .devider:before,
+.time .devider:after {
+	color: #737C85;
+}
+
+.time .devider i {
+	color: #fff;
+}
+#rule {
+	
+	background-color: rgba(6,32,51,.8);
+	background-attachment: fixed !important;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0;
+}
+
+.rule .devider:before,
+.rule .devider:after {
+	color: #737C85;
+}
+
+.rule .devider i {
+	color: #fff;
+}
+#prize {
+	
+	background-color: rgba(6,32,51,.8);
+	background-attachment: fixed !important;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0;
+}
+
+.prize .devider:before,
+.prize .devider:after {
+	color: #737C85;
+}
+
+.prize .devider i {
+	color: #fff;
+}
 #facts {
-	background-image: url("../img/parallax/city.jpg");
+	
 	background-color: rgba(6,32,51,.8);
 	background-attachment: fixed !important;
 	background-position: center center;
@@ -573,7 +676,7 @@ top: -8px;
 }
 
 .counters-item p {
-  font-size: 18px;
+  font-size: 15px;
   line-height: 24px;
   margin-top: 15px;
   text-transform: uppercase;

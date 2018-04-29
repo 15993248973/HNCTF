@@ -2,161 +2,169 @@
 
 {% block title %}注册{% endblock %}
 {% block head %}
-	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/LoginBox.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/Register.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/gloab.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static',filename='form/css/index.css') }}">
-	<script src="{{ url_for('static',filename='form/js/jquery-1.11.1.min.js') }}"></script>
-	<script src="{{ url_for('static',filename='form/js/register.js') }}"></script>
-	<script  src="{{ url_for('static', filename='form/js/checkCode.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='form/css/LoginBox.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='form/css/Register.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='form/css/gloab.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='form/css/index.css') }}">
+<script src="{{ url_for('static',filename='form/js/jquery-1.11.1.min.js') }}"></script>
+<script src="{{ url_for('static',filename='form/js/register.js') }}"></script>
+<script src="{{ url_for('static', filename='form/js/checkCode.js') }}"></script>
 
 {% endblock %}
 {% block body %}
-	<div class="main ">
-		<h1 class="page-title">注册</h1>
-		<div class="reg-box" id="verifyCheck" style="margin-top:5px;">
-            	<div class="part1">
-					 <form action="" onsubmit="return validate()" method="POST">
-			            <div class="form-container">
-			                <div class="form-group item">
-				                <span class="page">选择高校 :</span>
-				                <div class="f-fl item-ifo">
-			                     <select class="form-control"  name="school" >
-				                     {% for school in schools %}
-			                        <option >{{ school.school }}</option>
-				                     {% endfor %}
-			                    </select>
-							 <label class="focus"><span>选择正确学校，如缺少贵校请速与组委会联系</span></label>
-			                </div>
-			            </div>
-						 <div class="form-group item">
-			                <span class="page">老师姓名 :</span>
-							 <div class="f-fl item-ifo">
-							 <input type="text" name="teachername" maxlength="20" class=" txt03 f-r3 required"  placeholder="老师姓名" name="teachername" tabindex="1" data-valid="isNonEmpty||between:3-20||isUname" data-error="用户名不能为空||用户名长度3-20位||只能输入中文、字母、数字、下划线，且以中文或字母开头" id="adminNo" required />
-	                         <span class="ie8 icon-close close hide"></span>
-                             <label class="icon-sucessfill blank hide"></label>
-							 <label class="focus"><span>3-20位，中文、字母、数字、下划线的组合，以中文或字母开头</span></label>
-                             <label class="focus valid"></label>
-							 </div>
-						 </div>
-						 <div class="form-group item">
-			                <span class="page">手机号： </span>
-							 <div class="f-fl item-ifo">
-							 <input type="text" name="teacherphone" class=" txt03 f-r3 required" keycodes="tel" tabindex="2" data-valid="isNonEmpty||isPhone" data-error="手机号码不能为空||手机号码格式不正确" maxlength="11" id="phone"required />
-                             <span class="ie8 icon-close close hide"></span>
-                             <label class="icon-sucessfill blank hide"></label>
-                             <label class="focus">请填写11位有效的手机号码</label>
-                             <label class="focus valid"></label>
-							 </div>
-						 </div>
-						 
-						 <div class="form-group item">
-			                <span class="intelligent-label f-fl">密码：</span>
-                            <div class="f-fl item-ifo">
-                            <input type="password" name="password" id="password" maxlength="20" class="  txt03 f-r3 required" tabindex="3" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-20||level:2" data-error="密码不能为空||密码长度6-20位||该密码太简单，有被盗风险，建议字母+数字的组合" required />
-                            <span class="ie8 icon-close close hide" style="right:55px"></span>
-                            <span class="showpwd" data-eye="password"></span>
-                            <label class="icon-sucessfill blank hide"></label>
-                            <label class="focus">6-20位英文（区分大小写）、数字、字符的组合</label>
-                            <label class="focus valid"></label>
-                            <span class="clearfix"></span>
-                            <label class="strength">
-                            	<span class="f-fl f-size12 "> : 安全程度</span>
-                            	<b><i>弱</i><i>中</i><i>强</i></b>
-                            </label>
-                        </div>
-						 </div>
-						 
-						 <div class="form-group item">
-                        <span class="intelligent-label f-fl">确认密码:</span>
-                        <div class="f-fl item-ifo">
-                            <input type="password" name="repassword" maxlength="20" class="txt03 f-r3 required" tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-16||isRepeat:password" data-error="密码不能为空||密码长度6-16位||两次密码输入不一致" id="rePassword" required />
-                            <span class="ie8 icon-close close hide" style="right:55px"></span>
-                            <span class="showpwd" data-eye="rePassword"></span>
-                            <label class="icon-sucessfill blank hide"></label>
-                            <label class="focus">请再输入一遍上面的密码</label>
-                            <label class="focus valid"></label>
-                        </div>
-                    </div>
-				        <div class="form-group item">
-					        <span class="intelligent-label f-fl">验证码：</span>
-					        <div class="form-group item ">
-						        <input type="text" id="input" data-valid="isNonEmpty"  class=" txt03 required" />
-						        <input type="button" id="code" onclick="createCode()"  />
-						        <label class="focusa">看不清？<a href="javascript:;" class="c-blue" onclick="createCode()">换一张</a></label>
-                            </div>
-				        </div>
-                    <div class="item col-xs-12" style="height:auto">
-                        <p class="f-size14 required"  data-valid="isChecked" data-error="请先同意条款">
-                        	<input type="checkbox" checked required /><a href="javascript:showoutc();" class="f-ml5">我已阅读并同意条款</a>
-                        </p>
-                        <label class="focus valid"></label>
-                    </div>
-                    <!--<div class="item col-xs-12">-->
-                        <!--<span class="intelligent-label f-fl">&nbsp;</span>-->
-                        <!--<div class="f-fl item-ifo">-->
-                           <!--<a href="javascript:;" class="btn btn-blue f-r3" id="btn_part1">注册</a>-->
-                        <!--</div>-->
-                    <!--</div>-->
-	                   
-            <div class="form-container">
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block f-r3"  href="javascript:;" >立即注册</button>
-                    <p> 已有帐号？立即<a  href="{{ url_for('Login') }}"> 登录</a></p>
-                </div>
-            </div>
-			            </div>
-			            
-			</form>
-	    </div>
+<div class="main ">
+	<h1 class="page-title">注册</h1>
+	<div class="reg-box" id="verifyCheck" style="margin-top:5px;">
+		<div class="part1">
+			<form action="" onsubmit="return validate()" method="POST">
+				{% for message in get_flashed_messages() %}
+				<h4>
+					<a style="color: #cc0000"> {{ message }}</a>
+				</h4>
+				{% endfor %}
+				<div class="form-container">
+					<div class="form-group item">
+						<span class="page">选择高校 :</span>
+						<div class="f-fl item-ifo">
+							<select class="form-control" name="school">
+								{% for school in schools %}
+								<option>{{ school.school }}</option>
+								{% endfor %}
+							</select>
+							<label class="focus"><span>选择正确学校，如缺少贵校请速与组委会联系</span></label>
+						</div>
+					</div>
+					<div class="form-group item">
+						<span class="page">老师姓名 :</span>
+						<div class="f-fl item-ifo">
+							<input type="text" name="teachername" pattern="[\u4e00-\u9fa5]{2,8}" title="2-8位，以中文开头" maxlength="20" class=" txt03 f-r3 required"
+							       placeholder="老师姓名" name="teachername" tabindex="1"
+							       data-valid="isNonEmpty||between:2-8||isUname"
+							       data-error="用户名不能为空||用户名长度2-18位||只能输入中文，且以中文开头" id="adminNo" required/>
+							<span class="ie8 icon-close close hide"></span>
+							<label class="icon-sucessfill blank hide"></label>
+							<label class="focus"><span>2-8位，以中文开头</span></label>
+							<label class="focus valid"></label>
+						</div>
+					</div>
+					<div class="form-group item">
+						<span class="page">手机号： </span>
+						<div class="f-fl item-ifo">
+							<input type="text" name="teacherphone" pattern="1\d{10}" title="请填写11位有效的手机号码" class=" txt03 f-r3 required" keycodes="tel"
+							       tabindex="2" data-valid="isNonEmpty||isPhone" data-error="手机号码不能为空||手机号码格式不正确"
+							       maxlength="11" id="phone" required/>
+							<span class="ie8 icon-close close hide"></span>
+							<label class="icon-sucessfill blank hide"></label>
+							<label class="focus">请填写11位有效的手机号码</label>
+							<label class="focus valid"></label>
+						</div>
+					</div>
+					
+					<div class="form-group item">
+						<span class="intelligent-label f-fl">密码：</span>
+						<div class="f-fl item-ifo">
+							<input type="password" name="password" pattern="(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@.]+$).{6,20}" title="6-20位英文（区分大小写）、数字、字符(_#@.)的组合，至少包含其中两项" id="password" maxlength="20"
+							       class="  txt03 f-r3 required" tabindex="3" style="ime-mode:disabled;"
+							       onpaste="return  false" autocomplete="off"
+							       data-valid="isNonEmpty||between:6-20||level:2"
+							       data-error="密码不能为空||密码长度6-20位||该密码太简单，有被盗风险，建议字母+数字的组合" required/>
+							<span class="ie8 icon-close close hide" style="right:55px"></span>
+							<span class="showpwd" data-eye="password"></span>
+							<label class="icon-sucessfill blank hide"></label>
+							<label class="focus">6-20位英文（区分大小写）、数字、字符(_#@.)的组合，至少包含其中两项</label>
+							<label class="focus valid"></label>
+							<span class="clearfix"></span>
+							<label class="strength">
+								<b><i>弱</i><i>中</i><i>强</i></b>
+							</label>
+						</div>
+					</div>
+					<div class="form-group item">
+						<span class="intelligent-label f-fl">确认密码:</span>
+						<div class="f-fl item-ifo">
+							<input type="password" name="repassword" pattern="(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@.]+$).{6,20}" title="6-20位英文（区分大小写）、数字、字符(_#@.)的组合，至少包含其中两项" maxlength="20" class="txt03 f-r3 required"
+							       tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off"
+							       data-valid="isNonEmpty||between:6-16||isRepeat:password"
+							       data-error="密码不能为空||密码长度6-16位||两次密码输入不一致" id="rePassword" required/>
+							<span class="ie8 icon-close close hide" style="right:55px"></span>
+							<span class="showpwd" data-eye="rePassword"></span>
+							<label class="icon-sucessfill blank hide"></label>
+							<label class="focus">请再输入一遍上面的密码</label>
+							<label class="focus valid"></label>
+						</div>
+					</div>
+					<div class="form-group item">
+						<span class="intelligent-label f-fl">验证码：</span>
+						<div class="form-group item ">
+							<input type="text" id="input" data-valid="isNonEmpty" class=" txt03 required"
+							       required/>
+							<input type="button" id="code" onclick="createCode()"/>
+							<label class="focusa">看不清？<a class="c-blue" onclick="createCode()">换一张</a></label>
+						</div>
+					</div>
+				</div>
+					
+					<div class="item form-group" style="height:auto">
+						<p class="f-size14 required" data-valid="isChecked" data-error="请先同意条款">
+							<input type="checkbox" checked required/><a href="javascript:showoutc();" class="f-ml5">我已阅读并同意条款</a>
+						</p>
+						<label class="focus valid"></label>
+						<div class=" form-group form-container">
+							<button href="javascript:;" class="btn btn-primary btn-block f-r3" id="btn_part1">注册
+							</button>
+							<p> 已有帐号？立即<a href="{{ url_for('Login') }}"> 登录</a></p>
+						</div>
+					</div>
+				</form>
+				</div>
+		</div>
 	</div>
-		        
-                <!--<div class="part2 text-center" style="display:none">-->
-                	<!--<h3>恭您已注册成功</h3>-->
-                    <!--<p class="c-666 f-mt30 f-mb50">页面将在 <strong id="times" class="f-size18">10</strong> 秒钟后，跳转到 <a href="personal.html" class="c-blue">个人主页</a></p>-->
-                <!--</div>-->
-            <!--</div>-->
- 
 	
-
-<div class="m-sPopBg" style="z-index:998;"></div>
-<div class="m-sPopCon regcon">
-	<div class="m-sPopTitle"><strong>服务协议条款</strong><b id="sPopClose" class="m-sPopClose" onClick="closeClause()">×</b></div>
-    <div class="apply_up_content">
+	<div class="m-sPopBg" style="z-index:998;"></div>
+	<div class="m-sPopCon regcon">
+		<div class="m-sPopTitle"><strong>服务协议条款</strong><b id="sPopClose" class="m-sPopClose"
+		                                                   onClick="closeClause()">×</b></div>
+		<div class="apply_up_content">
     	<pre class="f-r0">
 		<strong>同意以下服务条款，提交注册信息</strong>
-		    <strong>亲爱的用户，您的身份信息、联系方式、交易信息需要被依法收集并使用。</strong>
-<strong>支付宝将严格保护您的个人信息，确保信息安全，具体详见《支付宝隐私权政策》。</strong>
-<strong>您在点击同意下列协议前，请您务必审慎阅读，并充分理解协议条款内容。</strong>
+		   
+      <strong>亲爱的老师，您的身份信息、联系方式、交易信息需要被依法收</strong>
+  <strong>集并使用。中原工学院将严格保护您的个人信息，确保信息安全。您</strong>
+  <strong>在点击同意下列协议前，请您务必审慎阅读，并充分理解内容。</strong>
 
         </pre>
-    </div>
-    <center><a class="btn btn-blue btn-lg f-size12 b-b0 b-l0 b-t0 b-r0 f-pl50 f-pr50 f-r3" href="javascript:closeClause();">已阅读并同意此条款</a></center>
+		</div>
+		<a class="btn btn-blue btn-lg f-size12 b-b0 b-l0 b-t0 b-r0 f-pl50 f-pr50 f-r3"
+		           href="javascript:closeClause();">已阅读并同意此条款</a>
+	</div>
 </div>
-
 <script>
-$(function(){
-	//第一页的确定按钮
-	$("#btn_part1").click(function(){
-		if(!verifyCheck._click()) return;
+    $(function () {
+        //第一页的确定按钮
+        $("#btn_part1").click(function () {
+            if (!verifyCheck._click()) return;
 
-		$(".part1").hide();
-		$(".part2").show();
-		$(".step li").eq(2).addClass("on");
-		countdown({
-			maxTime:10,
-			ing:function(c){
-				$("#times").text(c);
-			},
-			after:function(){
-				window.location.href="{{url_for('Login')}}";
-			}
-		});
-	});
-});
-function showoutc(){$(".m-sPopBg,.m-sPopCon").show();}
-function closeClause(){
-	$(".m-sPopBg,.m-sPopCon").hide();
-}
+            $(".part1").hide();
+            $(".step li").eq(2).addClass("on");
+            countdown({
+                maxTime: 10,
+                ing: function (c) {
+                    $("#times").text(c);
+                },
+                after: function () {
+                    window.location.href = "{{url_for('Login')}}";
+                }
+            });
+        });
+    });
+
+    function showoutc() {
+        $(".m-sPopBg,.m-sPopCon").show();
+    }
+
+    function closeClause() {
+        $(".m-sPopBg,.m-sPopCon").hide();
+    }
 </script>
+
 {% endblock %}

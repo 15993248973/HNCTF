@@ -1,12 +1,13 @@
 #encoding: utf-8
 
-from flask import Flask, render_template, request, redirect, url_for, session, g, flash
+from flask import Flask, render_template, request, redirect, url_for, session, g, flash, send_from_directory,make_response
 from exts import db
 import config
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
 from models import Teacher, Team, School, Member
 from datetime import timedelta
-
+from export_excel import Toexcel
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -14,7 +15,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 db.init_app(app)
 
-
+Toexcel = Toexcel()
 
 @app.route('/')
 def Index():
@@ -25,7 +26,23 @@ def Base():
     teams = g.teacher.teacher_teams
     return render_template('Base.html',teams=teams)
 
-@app.route('/Add/MyPage/',methods=['GET','POST'])
+
+@app.route('/Download')
+def Download():
+    return render_template('Download.html')
+
+
+@app.route('/Download/<filename>')
+def DownloadFilename(filename):
+    dir = '/static/home/download/'
+    print(filename)
+    response = make_response(send_from_directory(dir,filename,as_attachment=True))
+    print(response)
+    response.headers["Content-Disposition"] = "attachment; filename={}".format(filename.encode().decode('latin-1'))
+    return response
+
+
+@app.route('/Add/MyPage/',methods=['GET','POST'])     # 注册队伍
 def MyPage():
     if g.teacher_id:
         if request.method=='GET':
@@ -36,8 +53,8 @@ def MyPage():
             createteam = request.form.get('createteam')
             team =Team.query.filter(Team.teamname==createteam).first()
             if team:
-                print('qingchong..')
-                return '已有学校注册此队伍名称'
+                flash (u'警告：已有学校注册 "%s" 队伍名称,请更换名称重新注册！！！'% createteam)
+                return redirect(url_for('MyPage'))
             else:
                 team = Team(teamname=createteam,teacher_team_id = g.teacher_id,school_team_id = g.teacher.Teacher_school.id)
                 db.session.add(team)
@@ -47,40 +64,153 @@ def MyPage():
         return redirect(url_for('Login'))
 
 
-@app.route('/del/team/',methods=['GET','POST'])
+@app.route('/del/team/',methods=['GET','POST'])    #删除队伍
 def delteam():
     if request.method=='POST':
-        delteam = request.form.get('delteam')
-        print(delteam)
-        team = Team.query.filter(Team.teamname==delteam).first()
+        delteamid = request.form.get('delteamid')
+        team = Team.query.filter(Team.id==delteamid).first()
+        db.session.query(Member).filter(Member.team_member_id == team.id).delete()
         db.session.delete(team)
         db.session.commit()
         return redirect(url_for('MyPage'))
     else:
-        print('qq')
         return redirect(url_for('MyPage'))
 
-
-@app.route('/AllMessage/')                #所有信息显示
-def AllMessage():
+'''
+所有信息的展示
+'''
+@app.route('/AllMessage/<schoolid>')                #所有信息显示
+def AllMessage(schoolid):
     if g.teacher_id:
-        teams = g.teacher.teacher_teams
-        return render_template('AllMessage.html',teams=teams)
+        school = School.query.filter(School.id==schoolid).first()
+        teams = Team.query.filter(Team.teacher_team_id==g.teacher_id).all()
+        print(teams)
+        members = Member.query.filter(Member.school_member_id==schoolid).order_by('team_member_id').all()
+        Toexcel.excel(schoolid)
+        return render_template('AllMessage.html',members=members ,teamlist=teams,school=school)
     else:
         return redirect(url_for('Login'))#
-#设置信息
-@app.route('/Setting/Basic/')              # 基础模版
-def Basic():
+
+@app.route('/Admin/ManageTeacher/',methods=['POST','GET'])
+def admin_manage_teacher():
     if g.teacher_id:
-        teams = g.teacher.teacher_teams
-        return render_template('Basic.html',teams=teams)
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacherphone == u'15993248973':
+            if request.method=='GET':
+                manageteacher = Teacher.query.order_by('id').all()
+                return render_template('AdminManageTeacher.html',manageteacher=manageteacher)
+            else:
+                teacherid = request.form.get('teacherid')
+                teacher = Teacher.query.filter(Teacher.id ==teacherid).first()
+                teacher.teacherflag = 1
+                db.session.commit()
+                return redirect( url_for('admin_manage_teacher'))
+
+        else:
+            return redirect(url_for('Index'))  #
     else:
         return redirect(url_for('Login'))#
-@app.route('/Delete/Team',methods=['GET'])
 
+@app.route('/Admin/ManageTeacherFlag/',methods=['POST'])    #未审核
+def admin_manage_teacher_flag():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacherphone == u'15993248973':
+            if request.method=='POST':
+                teacherid = request.form.get('teacherid')
+                teacher = Teacher.query.filter(Teacher.id == teacherid).first()
+                teacher.teacherflag = 0
+                db.session.commit()
+                return redirect(url_for('admin_manage_teacher'))
+            else:return redirect(url_for('Login'))  #
 
+        else:
+            return redirect(url_for('Login'))  #
+    else:
+        return redirect(url_for('Login'))  #
 
+@app.route('/Admin/ManageTeacherDelete/', methods=['POST'])   #移除老师用户
+def admin_manage_teacher_delete():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacherphone == u'15993248973':
+            if request.method == 'POST':
+                teacherid = request.form.get('teacherid')
+                teacher = Teacher.query.filter(Teacher.id == teacherid).first()
+                db.session.query(Member).filter(Member.teacher_member_id == teacherid).delete()
+                db.session.query(Team).filter(Team.teacher_team_id==teacherid).delete()
+                db.session.delete(teacher)
+                db.session.commit()
+                return redirect(url_for('admin_manage_teacher'))
+            else:
+                return redirect(url_for('Index'))  #
 
+        else:
+            return redirect(url_for('Index'))  #
+    else:
+        return redirect(url_for('Login'))
+
+@app.route('/Admin/ManageTeacherAdmin/',methods=['POST'])   #提升为管理员和降级为普通用户
+def admin_manage_teacher_admin():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacherphone == u'15993248973':
+            if request.method=='POST':
+                teacherid = request.form.get('teacherid')
+                teacher = Teacher.query.filter(Teacher.id == teacherid).first()
+                teacher.teacheradmin = 1
+                db.session.commit()
+                return redirect(url_for('admin_manage_teacher'))
+            else:return redirect(url_for('Login'))  #
+
+        else:
+            return redirect(url_for('Index'))  #
+    else:
+        return redirect(url_for('Login'))  #
+
+@app.route('/Admin/ManageTeacherUser/', methods=['POST'])
+def admin_manage_teacher_user():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacherphone == u'15993248973':
+            if request.method=='POST':
+                teacherid = request.form.get('teacherid')
+                teacher = Teacher.query.filter(Teacher.id == teacherid).first()
+                teacher.teacheradmin = 0
+                db.session.commit()
+                return redirect(url_for('admin_manage_teacher'))
+            else:return redirect(url_for('Login'))  #
+
+        else:
+            return redirect(url_for('Login'))  #
+    else:
+        return redirect(url_for('Login'))  #
+
+@app.route('/Admin/Allmessage/')                 #管理员信息
+def admin_allmessage():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacherphone == u'15993248973':
+            members = Member.query.order_by('team_member_id').all()
+            teamslist=[]     #统计成员
+            teacherlist = []  # 统计老师
+            schoollist = []  # 统计学校
+            for member in members:
+                if member.team_member_id not in teamslist:
+                    teamslist.append(member.team_member_id)
+                else:pass
+                if member.teacher_member_id  not in teacherlist:
+                    teacherlist.append(member.teacher_member_id)
+                else:pass
+                if member.school_member_id not in schoollist:
+                    schoollist.append(member.school_member_id)
+                else:pass
+            Toexcel.all_school_excel()
+            return render_template('AdminAllMessage.html',members=members, teamslist=teamslist,teacherlist=teacherlist,schoollist=schoollist)
+        else:
+            return redirect(url_for('Login'))#
+    else:
+        return redirect(url_for('Login'))#
 
 @app.route('/Setting/Profile/',methods=['GET','POST'])       #个人信息展示
 def Profile():
@@ -88,7 +218,7 @@ def Profile():
         if request.method == 'GET':
             school = g.teacher.Teacher_school
             teams = g.teacher.teacher_teams
-            return render_template('Profile.html', school=school,teams=teams)
+            return render_template('Profile.html', school=school,team=teams)
         else:
             teachersex = request.form.get('teachersex')
             teacherdepartment = request.form.get('teacherdepartment')
@@ -107,13 +237,31 @@ def Profile():
         return redirect(url_for('Login'))#
 
 
-@app.route('/Setting/CreateTeam/')
-def CreateTeam():
+@app.route('/Setting/Team/<id>',methods=['GET']) #队伍的展示
+def team(id):
     if g.teacher_id:
-        return render_template('CreateTeam.html')
+        if request.method == 'GET':
+            team = Team.query.filter(Team.id ==id).first()
+            teams = g.teacher.teacher_teams
+            return render_template('FirstTeam.html',team=team,teams=teams)
     else:
         return redirect(url_for('Login'))#
 
+
+    '''
+    创建队伍
+    '''
+@app.route('/Setting/AddTeam/',methods=['POST'])
+def AddTeam():
+    if g.teacher_id:
+        if request.method =='POST':
+            teamid = request.form.get('teamid')
+            member = Member(school_member_id=g.teacher.Teacher_school.id, teacher_member_id=g.teacher_id,
+                            team_member_id=teamid, membername='', membersex=''
+                            , membergrade='', memberskill='', membersize='', memberphone='', memberemail='')
+            db.session.add(member)
+            db.session.commit()
+            return redirect(url_for('team',id=teamid))
 
 @app.route('/Setting/FirstTeam/',methods=['GET','POST'])            #  第一支队伍的展示
 def FirstTeam():
@@ -127,20 +275,16 @@ def FirstTeam():
                 return render_template('FirstTeam.html',school=school,teamss=teamss[0],teams=teams,members=members)
             except IndexError as e:
                 return '404'
-
-        else:
-            member = Member(school_member_id=g.teacher.Teacher_school.id, teacher_member_id=g.teacher_id, team_member_id=g.teacher.teacher_teams[0].id, membername='')
-            db.session.add(member)
-            db.session.commit()
-            return redirect(url_for('FirstTeam'))
     else:
         return redirect(url_for('Login'))#
 
 #更新队员信息
-@app.route('/Setting/FirstTeam/Updata/',methods=['POST'])
+@app.route('/Setting/Team/Updata/',methods=['POST'])
 def Updata():
     if g.teacher_id:
         if request.method=='POST':
+            teamid = request.form.get('team_id')
+            memberid = request.form.get('memberid')
             membername = request.form.get('membername')
             membersex = request.form.get('membersex')
             membergrade= request.form.get('membergrade')
@@ -149,9 +293,9 @@ def Updata():
             memberphone = request.form.get('memberphone')
             memberemail = request.form.get('memberemail')
             memberroom = request.form.get('memberroom')
-            member = Member.query.filter(Member.teacher_member_id==g.teacher_id).first()
+            member = Member.query.filter(Member.id == memberid).first()
             member.membername = membername
-            member.membersex=membersex
+            member.membersex = membersex
             member.membergrade=membergrade
             member.membersize=membersize
             member.memberskill=memberskill
@@ -159,98 +303,59 @@ def Updata():
             member.memberemail=memberemail
             member.memberroom = memberroom
             db.session.commit()
-            return redirect(url_for('FirstTeam'))
+            return redirect(url_for('team',id=teamid))
     else:
         return redirect(url_for('Login'))#
 
-@app.route('/Setting/FirstTeam/Dele/',methods=['POST'])
+'''
+队伍的删除
+'''
+@app.route('/Setting/Team/Dele/',methods=['POST'])
 def dele():
     if g.teacher_id:
         if request.method=='POST':
-            membername = request.form.get('membername')
-            print(membername)
-            member = Member.query.filter(Member.membername=='').first()
-            print(member)
+            memberid = request.form.get('memberid')
+            teamid = request.form.get('teamid')
+            print(memberid)
+            member = Member.query.filter(Member.id == memberid).first()
             db.session.delete(member)
             db.session.commit()
-            return redirect(url_for('FirstTeam'))
-        else:
-
-            return redirect(url_for('FirstTeam'))
+            return redirect(url_for('team',id=member.team_member_id))
     return redirect(url_for('Index'))
 
-
-@app.route('/Setting/SecondTeam/')
-def SecondTeam():
-    if g.teacher_id:
-        return render_template('SecondTeam.html')
-    else:
-        return redirect(url_for('Login'))#
-@app.route('/Setting/ThirdTeam/')
-def ThirdTeam():
-    if g.teacher_id:
-        return render_template('ThirdTeam.html')
-    else:
-        return redirect(url_for('Login'))#
-
-
-@app.route('/ModifyTeam/', methods=['GET', 'POST'])
-def ModifyTeam():
-    if g.teacher_id:
-        if request.method == 'GET':
-            return render_template('ModifyTeam.html')
-        else:
-            school = request.form.get('school')
-            teamname = request.form.get('teamname')
-            teacher = request.form.get('teacher')
-            teacherphone = request.form.get('teacherphone')
-            member1 = request.form.get('member1')
-            member1phone = request.form.get('member1phone')
-            member2 = request.form.get('member2')
-            member2phone = request.form.get('member2phone')
-            member3 = request.form.get('member3')
-            member3phone = request.form.get('member3phone')
-
-            teamnameGet = request.args.get("teamname")
-            team = Team.query.filter(Team.teamname == teamnameGet).first()
-            team.school = school
-            team.teamname = teamname
-            team.teacher = teacher
-            team.teacherphone = teacherphone
-            team.member1 = member1
-            team.member1phone = member1phone
-            team.member2 = member2
-            team.member2phone = member2phone
-            team.member3 = member3
-            team.member3phone = member3phone
-            db.session.commit()
-            return '修改成功'
-    else:
-        return redirect(url_for('Login'))
 
 #添加学校模块，查询学校是否被添加到school表中
 
 @app.route('/admin/add/school/' ,methods=['GET','POST'])
 def AddSchool():
-    if request.method=='GET':
-        Schools = {
-            'schools': School.query.order_by('id').all()
-        }
-        return render_template('Admin.html',**Schools)
-    else:
-        school = request.form.get('addschool')
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teachername == u'卜俊杰':
+            if request.method=='GET':
+                Schools = {
+                    'schools': School.query.order_by('id').all()
+                }
+                return render_template('Admin.html',**Schools)
+            else:
+                school = request.form.get('addschool')
 
-        addschool = School.query.filter(School.school==school).first()
-        if addschool:
-            return '学校已经添加'
+                addschool = School.query.filter(School.school==school).first()
+                if addschool:
+                    return '学校已经添加'
+                else:
+                    school = School(school = school)
+                    db.session.add(school)
+                    db.session.commit()
+                    return redirect(url_for('AddSchool'))
         else:
-            school = School(school = school)
-            db.session.add(school)
-            db.session.commit()
-            return redirect(url_for('AddSchool'))
+            print(teacher.teachername)
+            return redirect(url_for('Index'))
+    else:
 
-
-
+        return redirect(url_for('Index'))
+'''
+完成登录模块
+'''
 @app.route('/Login/', methods=['GET', 'POST'])
 def Login():
     if request.method == 'GET':
@@ -264,17 +369,25 @@ def Login():
         # 这样他访问该网页其他东西就不用再次验证信息
         if teacher and teacher.check_password(password):
             session['teacher_id'] = teacher.id
-            # 如果想在31天内都不需要登陆
             session.permanent = True
-
             return redirect(url_for('Index'))
         else:
-            flash(u'账号或密码输入错误，请确认后重新输入！')
+            flash(u'账号或密码输入错误，请确认后重新输入!!！')
             return redirect(url_for('Login'))
 
 
-# 删除学校
 
+#测试页面
+@app.route('/test/',methods=['GET','POST'])
+def test():
+    if request.method=='GET':
+        return render_template('test.html')
+    else:
+        name=request.form.get('name')
+        return redirect(url_for('test'))
+''''
+注册页面
+'''
 @app.route('/Register/', methods=['GET', 'POST'])
 def Regist():
     if request.method == 'GET':
@@ -288,65 +401,78 @@ def Regist():
         teacherphone = request.form.get('teacherphone')
         password = request.form.get('password')
         repassword = request.form.get('repassword')
-
         #号码验证，注册过得不能再次注册
-        teacher = Teacher.query.filter(Teacher.teacherphone == teacherphone).first()
-        if teacher:
-            return '该s手机号已被注册!'
+        teacher_phone = Teacher.query.filter(Teacher.teacherphone == teacherphone).first()
+        if teacher_phone:
+            flash(u'该手机号已被注册!')
+            return redirect(url_for('Regist'))
         else:
-            # password1要跟password2相等才行
             if password != repassword:
-                flash('两次输入的密码不相同，请重新输入！')
+                flash(u'两次输入的密码不相同，请重新输入！')
                 return redirect(url_for('Regist'))
             else:
-                print(school)
                 school_id = School.query.filter(School.school == school).first()
-
-                print('school',school_id.school)
-                print(teachername)
-                print (teachername,teacherphone,password,repassword)
-                teacher = Teacher(teachername=teachername, teacherphone=teacherphone, password=password)
+                newteacher = Teacher(teachername=teachername, teacherphone=teacherphone, password=password)
                 #数据添加到数据库中
-                teacher.school_teacher_id=school_id.id
-                db.session.add(teacher)
+                newteacher.teachersex=''
+                newteacher.teacherdepartment=''
+                newteacher.teacheremail=''
+                newteacher.teacherjob=''
+                newteacher.teacherroom=''
+                newteacher.school_teacher_id=school_id.id
+                db.session.add(newteacher)
                 db.session.commit()
-
                 #注册完成 就跳转到登陆页面db.session.commit()
-                return redirect(url_for('Login'))
+                return render_template('RegisterSuccess.html')
 
 
-@app.route('/RegisterTeam/', methods=['GET', 'POST'])
-def RegisterTeam():
+#修改密码
+@app.route('/ModifyPassword/',methods=['GET','POST'])
+def ModifyPassword():
     if g.teacher_id:
-        if request.method == 'GET':
-            return render_template('RegisterTeam.html')
+        if request.method=='GET':
+            school = g.teacher.Teacher_school
+            teams = g.teacher.teacher_teams
+            return render_template('ModifyPassword.html',school=school,teams=teams)
         else:
-            school = request.form.get('school')
-            teamname = request.form.get('teamname')
-            teacher = request.form.get('teacher')
-            teacherphone = request.form.get('teacherphone')
-            member1 = request.form.get('member1')
-            member1phone = request.form.get('member1phone')
-            member2 = request.form.get('member2')
-            member2phone = request.form.get('member2phone')
-            member3 = request.form.get('member3')
-            member3phone = request.form.get('member3phone')
-
-            team = Team.query.filter(Team.teamname == teamname).first()
-            if team:
-                return '该队名已注册'
-            else:
-                team = Team(school=school, teamname=teamname, teacher=teacher, teacherphone=teacherphone,
-                            member1=member1, member1phone=member1phone, member2=member2, member2phone=member2phone,
-                            member3=member3, member3phone=member3phone, user_id=g.teacher.id)
-                db.session.add(team)
+            oldpassword = request.form.get('oldpassword')
+            newpassword = request.form.get('newpassword')
+            teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+            if teacher.check_password(oldpassword):
+                teacher.password = generate_password_hash(newpassword)
                 db.session.commit()
-                return '注册成功'
+                flash(u'密码修改成功')
+                return redirect(url_for('ModifyPassword'))
+            else:
+                flash(u'原密码不正确，请输入正确密码')
+                return redirect(url_for('ModifyPassword'))
     else:
         return redirect(url_for('Login'))
 
+#重置密码
+@app.route('/asd',methods=['POST'])
+def password():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacherphone == u'15993248973':
+            if request.method=='POST':
+                teacherid = request.form.get('teacherid')
+                teacher = Teacher.query.filter(Teacher.id==teacherid).first()
+                teacher.password = generate_password_hash('dropsec2018')
+                db.session.commit()
+                flash(u'密码重置成功')
+                return redirect( url_for('admin_manage_teacher'))
+            else:
+                flash(u'密码重置失败请重试')
+                return redirect( url_for('admin_manage_teacher'))
+        else:
+            return redirect(url_for('Index'))  #
+    else:
+        return redirect(url_for('Login'))  #
 
-
+'''
+在请求之前完成的函数
+'''
 @app.before_request
 def my_before_request():
     teacher_id = session.get('teacher_id')
@@ -354,7 +480,11 @@ def my_before_request():
     if teacher_id:
         teacher = Teacher.query.filter(Teacher.id == teacher_id).first()
         if teacher:
-            g.teacher = teacher                          #全局下的变量teacher对象
+            g.teacher = teacher     #全局下的变量teacher对象
+        else:pass
+    else:pass
+
+
 
 
 @app.route('/Logout/')

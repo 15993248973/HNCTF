@@ -12,7 +12,6 @@ class Teacher(db.Model):
     __tablename__ = 'teacher'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True) # 老师id
     teachername = db.Column(db.String(100), nullable=False) # 老师名字
-    teamname = db.Column(db.String(100), nullable=True)     # 队伍名字
     teacherphone = db.Column(db.String(11), nullable=False)     # 老师手机
     password = db.Column(db.String(100), nullable=False)     # 老师密码
     teachersex = db.Column(db.String(100), nullable=True)     # 老师性别
@@ -20,6 +19,9 @@ class Teacher(db.Model):
     teacherjob = db.Column(db.String(100), nullable=True)     # 老师职位
     teacheremail = db.Column(db.String(100), nullable=True)     # 老师邮箱
     teacherroom = db.Column(db.String(100), nullable=True)     # 老师备注房间
+    teacherflag = db.Column(db.String(10),nullable=True)  #老师flag
+    teacheradmin = db.Column(db.String(10),nullable=True)  #老师升为管理员
+
     school_teacher_id = db.Column(db.Integer, db.ForeignKey('school.id'))
 
     Teacher_school = db.relationship('School',backref= db.backref('school_teachers'))
@@ -36,6 +38,7 @@ class Teacher(db.Model):
         self.teachername = teachername
         self.teacherphone = teacherphone
         self.password = generate_password_hash(password)
+
 
     def check_password(self, raw_password):
         result = check_password_hash(self.password, raw_password)

@@ -61,7 +61,7 @@
 					<!-- /responsive nav button -->
 
 					<!-- logo -->
-                    <a class="navbar-brand" href="#body">
+                    <a class="navbar-brand" href="{{url_for('Index')}}">
 						<h1 id="logo">
 							<img src="{{ url_for('static', filename='home/img/logo.png') }}" alt="zzti">
 						</h1>
@@ -84,16 +84,20 @@
 	                         <li class="dropdown">
 					              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ teacher.teachername }}<b class="caret"></b> </a>
 				                <ul class="dropdown-menu page  ">
-						            <li ><a class=" pageword" href="{{ url_for('MyPage') }}">个人中心</a></li>
-					                 <li><a class=" pageword" href="{{ url_for('RegisterTeam') }}">注册团队</a></li>
-						            <li><a class=" pageword" href="{{ url_for('AllMessage') }}">修改密码</a></li>
+						            <li ><a class=" pageword" href="{{ url_for('Profile') }}">个人中心</a></li>
+					                 <li><a class=" pageword" href="{{url_for('MyPage')}}">注册团队</a></li>
+					                 <li><a class=" pageword" href="{{url_for('AllMessage',schoolid=teacher.school_teacher_id) }}">队伍信息</a></li>
+						            <li><a class=" pageword" href="{{url_for('ModifyPassword')}}">修改密码</a></li>
 {#						            <li role="separator" class="divider"></li>#}
-						            <li><a href="#">其他</a></li>
+						            <li><a href="#"></a></li>
 {#						            <li role="separator" class="divider"></li>#}
-{#						            <li><a href="#">其他</a></li>#}
+{#						            <li><a href="#"></a></li>#}
 				                </ul>
 				              </li>
                              <li class="btn-cta"><a href="{{ url_for('Logout') }}"><span>注销</span></a></li>
+	                     {% if teacher.teacheradmin=='1' %}
+	                     <li class="btn-cta"><a href="{{ url_for('admin_manage_teacher') }}"><span>管理员</span></a></li>
+	                     {% endif %}
                          {% else %}
 						     <li class="btn-cta"><a href="{{ url_for('Login') }}"><span>登录</span></a></li>
                              <li class="btn-cta"><a href="{{ url_for('Regist') }}"><span>注册</span></a></li>
@@ -155,61 +159,6 @@
 		<!-- Custom Functions -->
         <script src="{{ url_for('static', filename='home/js/custom.js') }}"></script>
 
-		<!--<script type="text/javascript">-->
-			<!--$(function(){-->
-				<!--/* ========================================================================= */-->
-				<!--/*	Contact Form-->
-				<!--/* ========================================================================= */-->
 
-				<!--$('#contact-form').validate({-->
-					<!--rules: {-->
-						<!--name: {-->
-							<!--required: true,-->
-							<!--minlength: 2-->
-						<!--},-->
-						<!--email: {-->
-							<!--required: true,-->
-							<!--email: true-->
-						<!--},-->
-						<!--message: {-->
-							<!--required: true-->
-						<!--}-->
-					<!--},-->
-					<!--messages: {-->
-						<!--name: {-->
-							<!--required: "come on, you have a name don't you?",-->
-							<!--minlength: "your name must consist of at least 2 characters"-->
-						<!--},-->
-						<!--email: {-->
-							<!--required: "no email, no message"-->
-						<!--},-->
-						<!--message: {-->
-							<!--required: "um...yea, you have to write something to send this form.",-->
-							<!--minlength: "thats all? really?"-->
-						<!--}-->
-					<!--},-->
-					<!--submitHandler: function(form) {-->
-						<!--$(form).ajaxSubmit({-->
-							<!--type:"POST",-->
-							<!--data: $(form).serialize(),-->
-							<!--url:"process.php",-->
-							<!--success: function() {-->
-								<!--$('#contact-form :input').attr('disabled', 'disabled');-->
-								<!--$('#contact-form').fadeTo( "slow", 0.15, function() {-->
-									<!--$(this).find(':input').attr('disabled', 'disabled');-->
-									<!--$(this).find('label').css('cursor','default');-->
-									<!--$('#success').fadeIn();-->
-								<!--});-->
-							<!--},-->
-							<!--error: function() {-->
-								<!--$('#contact-form').fadeTo( "slow", 0.15, function() {-->
-									<!--$('#error').fadeIn();-->
-								<!--});-->
-							<!--}-->
-						<!--});-->
-					<!--}-->
-				<!--});-->
-			<!--});-->
-		<!--</script>-->
     </body>
 </html>
