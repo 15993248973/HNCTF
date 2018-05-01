@@ -1,5 +1,5 @@
 {% extends 'Basic.html' %}
-
+{% block title %}队伍{% endblock %}
 {% block bodyright %}
 <nav class="navbar-default navbar-side" role="navigation">
 	<div class="sidebar-collapse">
@@ -7,16 +7,16 @@
 			
 			
 			<li>
-				<a href="{{ url_for('Profile') }}"><i class="fa fa-desktop"></i> 个人信息</a>
+				<a href="{{ url_for('Profile') }}"><i class="fa fa-user"></i> 个人信息</a>
 			</li>
 			<li>
-				<a href="{{ url_for('AllMessage',schoolid=teacher.school_teacher_id) }}"><i class="fa fa-sitemap"></i>
+				<a href="{{ url_for('AllMessage',schoolid=teacher.school_teacher_id) }}"><i class="fa fa-table"></i>
 					队伍信息总揽</a>
 			
 			</li>
 			
 			<li>
-				<a href="{{ url_for('MyPage') }}"><i class="fa fa-qrcode"></i> 个人带队<span
+				<a href="{{ url_for('MyPage') }}"><i class="fa fa-users"></i> 个人带队<span
 						class="fa arrow"></span></a>
 				<ul class="nav nav-second-level">
 					{% for t in teams %}
@@ -185,7 +185,7 @@
 												</fieldset>
 												<div class="control">
 													<div class="label-page"><label>队员姓名</label></div>
-													<input type="text" class="form-control" pattern="[\u4e00-\u9fa5]{2,8}" title="2-8位，以中文开头"
+													<input type="text" class="form-control" pattern="[A-Za-z0-9\u4e00-\u9fa5]{2,10}" title="2-10位，不得出现特殊字符"
 													       value="{{ team.team_members[i].membername }}"
 													       placeholder="请填写真实姓名 " name="membername" required/>
 													<input type="hidden" value="{{ team.team_members[i].id}}"
@@ -215,7 +215,7 @@
 												</div>
 												<div class="control">
 													<div class="label-page"><label>专业/年级</label></div>
-													<input type="text" class="form-control" pattern="[\u4e00-\u9fa5]{2,8}" title="2-20位，以中文开头,包含中文或数字"
+													<input type="text" class="form-control" pattern="[A-Za-z0-9\u4e00-\u9fa5]{2,10}" title="2-10位，不得出现特殊字符"
 													       value="{{ team.team_members[i].membergrade }}"
 													       placeholder="请填写专业年级：网络工程161 " name="membergrade"/>
 												</div>
@@ -223,7 +223,7 @@
 												<div class="control">
 													<div class="label-page"><label>衣服尺码</label></div>
 													<div class="form-group">
-														<select class="form-control" name="membersize">
+														<select class="form-control" name="membersize"  >
 															<option>{{team.team_members[i].membersize }}</option>
 															<option>s</option>
 															<option>m</option>
@@ -248,9 +248,9 @@
 												
 												<div class="control">
 													<div class="label-page"><label>技能偏向</label></div>
-													<input type="text" class="form-control" pattern="[\u4e00-\u9fa5]{2,8}" title="2-20位，以中文开头,包含中文或数字"
+													<input type="text" class="form-control" pattern="[A-Za-z0-9\u4e00-\u9fa5]{2,10}" title="2-10位，不得出现特殊字符"
 													       value="{{ team.team_members[i].memberskill }}"
-													       placeholder="请填写擅长技能：web、二进制、数据分析等 " name="memberskill"
+													       placeholder="请填写擅长技能：web、二进制、数据分析等 " name="memberskill" required
 													>
 												</div>
 												<div class="control">
@@ -261,13 +261,13 @@
 												</div>
 												<div class="control">
 													<div class="label-page"><label>邮箱</label></div>
-													<input type="text" class="form-control" pattern=" /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" title="请输入正确的email格式"
+													<input type="text" class="form-control" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$" title="请输入正确的email格式"
 													       value="{{ team.team_members[i].memberemail }}"
 													       placeholder=" 请填写真实邮箱" name="memberemail">
 												</div>
 												<div class="control">
 													<div class="label-page"><label>备注</label></div>
-													<input type="text" class="form-control" pattern="[\u4e00-\u9fa5]{0,50}" title="-50位，"
+													<input type="text" class="form-control" pattern="[A-Za-z0-9\u4e00-\u9fa5]{0,10}" title="0-10位，不得出现特殊字符。"
 													       value="{{ team.team_members[i].memberroom }}" placeholder=" "
 													       name="memberroom">
 												</div>

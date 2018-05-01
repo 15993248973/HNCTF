@@ -1,35 +1,36 @@
 ﻿{% extends 'Basic.html' %}
 
-
+{% block title %}个人带队{% endblock %}
 {% block bodyright %}
-	<nav class="navbar-default navbar-side" role="navigation">
-		<div class="sidebar-collapse">
-			<ul class="nav" id="main-menu">
-				
-				
-				<li>
-					<a href="{{ url_for('Profile') }}" ><i class="fa fa-desktop " ></i> 个人信息</a>
-				</li>
-				<li>
-					<a href="{{ url_for('AllMessage',schoolid=teacher.school_teacher_id) }}"><i class="fa fa-sitemap"></i> 队伍信息总揽</a>
-				
-				</li>
-				
-				<li>
-					<a href="{{ url_for('MyPage') }}" class="active-menu"><i class="fa fa-qrcode"></i> 个人带队<span
-							class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						{% for t in teams %}
-						<li>
-							<a href="{{ url_for('team',id=t.id) }}">{{ t.teamname }}</a>
-						</li>
-						{%endfor%}
-					</ul>
-				
-			</ul>
+<nav class="navbar-default navbar-side" role="navigation">
+	<div class="sidebar-collapse">
+		<ul class="nav" id="main-menu">
+			
+			
+			<li>
+				<a href="{{ url_for('Profile') }}"><i class="fa fa-user "></i> 个人信息</a>
+			</li>
+			<li>
+				<a href="{{ url_for('AllMessage',schoolid=teacher.school_teacher_id) }}"><i class="fa fa-table"></i>
+					队伍信息总揽</a>
+			
+			</li>
+			
+			<li>
+				<a href="{{ url_for('MyPage') }}" class="active-menu"><i class="fa fa-users"></i> 个人带队<span
+						class="fa arrow"></span></a>
+				<ul class="nav nav-second-level">
+					{% for t in teams %}
+					<li>
+						<a href="{{ url_for('team',id=t.id) }}">{{ t.teamname }}</a>
+					</li>
+					{%endfor%}
+				</ul>
 		
-		</div>
-	</nav>
+		</ul>
+	
+	</div>
+</nav>
 
 <div id="page-wrapper">
 	<div class="header">
@@ -57,11 +58,11 @@
 								
 								{% for message in get_flashed_messages() %}
 								
-									<div class="alert alert-danger">
-										<button type="button" class="close" data-dismiss="alert">关闭&times;</button>
-										
-										<h4 style="color: #cc0000" >{{ message }}</h4>
+								<div class="alert alert-danger">
+									<button type="button" class="close" data-dismiss="alert">关闭&times;</button>
 									
+									<h4 style="color: #cc0000">{{ message }}</h4>
+								
 								
 								</div>
 								{% endfor %}
@@ -92,7 +93,8 @@
 								<form role="form" method="POST">
 									<div class="control">
 										<div class="label-page"><label>创建队伍</label></div>
-										<input class="form-control" placeholder="请输入要创建队伍名" name="createteam" pattern="[\u4e00-\u9fa5]{2,8}" title="2-8位，以中文开头" required>
+										<input class="form-control" placeholder="请输入要创建队伍名" name="createteam"
+										       pattern="[A-Za-z0-9\u4e00-\u9fa5]{2,10}" title="2-10位，不得出现特殊字符" required>
 										<button type="submit" class="btn btn-primary ">创建队伍</button>
 									</div>
 								</form>

@@ -14,7 +14,7 @@ app.config.from_object(config)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 db.init_app(app)
-
+admin = u'1'
 Toexcel = Toexcel()
 
 @app.route('/')
@@ -82,20 +82,31 @@ def delteam():
 @app.route('/AllMessage/<schoolid>')                #所有信息显示
 def AllMessage(schoolid):
     if g.teacher_id:
-        school = School.query.filter(School.id==schoolid).first()
-        teams = Team.query.filter(Team.teacher_team_id==g.teacher_id).all()
-        print(teams)
-        members = Member.query.filter(Member.school_member_id==schoolid).order_by('team_member_id').all()
-        Toexcel.excel(schoolid)
-        return render_template('AllMessage.html',members=members ,teamlist=teams,school=school)
+        teacherflag = Teacher.query.filter(Teacher.teacherflag == '1', Teacher.id == g.teacher_id).first()
+        school = School.query.filter(School.id == schoolid).first()
+        if teacherflag:
+            members = Member.query.filter(Member.school_member_id==schoolid).order_by('team_member_id').all()
+            teams = []
+            for member in members:
+                if member.team_member_id not in teams:
+                    teams.append(member.team_member_id)
+            Toexcel.examine_excel(schoolid, school.school, g.teacher.teachername)
+            print('我有权限')
+            return render_template('AllMessage.html', members=members, teamlist=teams,school=school)
+        else:
+            teams = Team.query.filter(Team.teacher_team_id == g.teacher_id).all()
+            members = Member.query.filter(Member.school_member_id == schoolid , Member.teacher_member_id==g.teacher_id).order_by('team_member_id').all()
+            Toexcel.unexamine_excel(schoolid, g.teacher_id, school.school, g.teacher.teachername)
+            print('我没权限')
+            return render_template('AllMessage.html', members=members, teamlist=teams, school=school)
     else:
         return redirect(url_for('Login'))#
 
-@app.route('/Admin/ManageTeacher/',methods=['POST','GET'])
+@app.route('/Admin/ManageTeacher/',methods=['POST','GET']) #审核功能，审核成功
 def admin_manage_teacher():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teacherphone == u'15993248973':
+        if teacher.teacheradmin == admin:
             if request.method=='GET':
                 manageteacher = Teacher.query.order_by('id').all()
                 return render_template('AdminManageTeacher.html',manageteacher=manageteacher)
@@ -105,7 +116,6 @@ def admin_manage_teacher():
                 teacher.teacherflag = 1
                 db.session.commit()
                 return redirect( url_for('admin_manage_teacher'))
-
         else:
             return redirect(url_for('Index'))  #
     else:
@@ -115,17 +125,17 @@ def admin_manage_teacher():
 def admin_manage_teacher_flag():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teacherphone == u'15993248973':
+        if teacher.teacheradmin == admin:
             if request.method=='POST':
                 teacherid = request.form.get('teacherid')
                 teacher = Teacher.query.filter(Teacher.id == teacherid).first()
                 teacher.teacherflag = 0
                 db.session.commit()
                 return redirect(url_for('admin_manage_teacher'))
-            else:return redirect(url_for('Login'))  #
+            else:return redirect(url_for('Index'))  #
 
         else:
-            return redirect(url_for('Login'))  #
+            return redirect(url_for('Index'))  #
     else:
         return redirect(url_for('Login'))  #
 
@@ -133,7 +143,7 @@ def admin_manage_teacher_flag():
 def admin_manage_teacher_delete():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teacherphone == u'15993248973':
+        if teacher.teacheradmin == admin:
             if request.method == 'POST':
                 teacherid = request.form.get('teacherid')
                 teacher = Teacher.query.filter(Teacher.id == teacherid).first()
@@ -154,7 +164,7 @@ def admin_manage_teacher_delete():
 def admin_manage_teacher_admin():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teacherphone == u'15993248973':
+        if teacher.teacheradmin == admin:
             if request.method=='POST':
                 teacherid = request.form.get('teacherid')
                 teacher = Teacher.query.filter(Teacher.id == teacherid).first()
@@ -172,7 +182,7 @@ def admin_manage_teacher_admin():
 def admin_manage_teacher_user():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teacherphone == u'15993248973':
+        if teacher.teacheradmin == admin:
             if request.method=='POST':
                 teacherid = request.form.get('teacherid')
                 teacher = Teacher.query.filter(Teacher.id == teacherid).first()
@@ -190,7 +200,7 @@ def admin_manage_teacher_user():
 def admin_allmessage():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teacherphone == u'15993248973':
+        if teacher.teacheradmin == admin:
             members = Member.query.order_by('team_member_id').all()
             teamslist=[]     #统计成员
             teacherlist = []  # 统计老师
@@ -205,7 +215,7 @@ def admin_allmessage():
                 if member.school_member_id not in schoollist:
                     schoollist.append(member.school_member_id)
                 else:pass
-            Toexcel.all_school_excel()
+            Toexcel.all_school_excel()    #审核过后的人员提交队伍信息
             return render_template('AdminAllMessage.html',members=members, teamslist=teamslist,teacherlist=teacherlist,schoollist=schoollist)
         else:
             return redirect(url_for('Login'))#
@@ -330,7 +340,7 @@ def dele():
 def AddSchool():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teachername == u'卜俊杰':
+        if teacher.teacheradmin == admin:
             if request.method=='GET':
                 Schools = {
                     'schools': School.query.order_by('id').all()
@@ -454,7 +464,7 @@ def ModifyPassword():
 def password():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
-        if teacher.teacherphone == u'15993248973':
+        if teacher.teacheradmin == admin:
             if request.method=='POST':
                 teacherid = request.form.get('teacherid')
                 teacher = Teacher.query.filter(Teacher.id==teacherid).first()
@@ -469,6 +479,15 @@ def password():
             return redirect(url_for('Index'))  #
     else:
         return redirect(url_for('Login'))  #
+
+
+@app.errorhandler(404)              #页面不存在
+def page_not_found(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)              #服务器不能响应
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 '''
 在请求之前完成的函数
