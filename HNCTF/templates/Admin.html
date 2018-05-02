@@ -22,25 +22,20 @@
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu">
-
-                    <li>
-                        <a href=""><i class="fa fa-dashboard"></i> 添加学校</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('Profile') }}" ><i class="fa fa-desktop"></i> 个人信息</a>
-                    </li>
-	                <li>
-                        <a href="{{ url_for('MyPage') }}"><i class="fa fa-qrcode"></i> 个人带队</a>
-                    </li>
-
-                    <li>
-                        <a  href=""><i class="fa fa-sitemap"></i> 队伍信息总揽<span class="fa arrow"></span></a>
-                        
-                        <li>
-                            <a href="#"><i class="fa fa-table"></i> 修改密码</a>
-                        </li>
-                </ul>
+                			<ul class="nav" id="main-menu">
+				
+				<li>
+					<a href="{{ url_for('admin_allmessage') }}"><i class="fa fa-table"></i> 队伍成员信息统计</a>
+				</li>
+				<li>
+					<a href="{{ url_for('admin_manage_teacher') }}" ><i
+							class="fa fa-users"></i> 用户管理界面</a>
+				</li>
+				
+				<li>
+					<a href="{{ url_for('AddSchool') }}"  class="active-menu"><i class="fa fa-plus-square"></i> 学校管理</a>
+				</li>
+			</ul>
             </div>
         </nav>
     </div>

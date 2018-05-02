@@ -336,7 +336,7 @@ def dele():
 
 #添加学校模块，查询学校是否被添加到school表中
 
-@app.route('/admin/add/school/' ,methods=['GET','POST'])
+@app.route('/Admin/Add/School/' ,methods=['GET','POST'])
 def AddSchool():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()

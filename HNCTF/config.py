@@ -8,9 +8,9 @@ SECRET_KEY = os.urandom(24)
 pymysql.install_as_MySQLdb()
 DIALECT = 'mysql'
 DRIVER = 'mysqldb'
-USERNAME = 'root'
-PASSWORD = 'root'
-HOST = '127.0.0.1'
+USERNAME = 'HNCTF2018'
+PASSWORD = 'HNCTF2018'
+HOST = '47.95.13.227'
 PORT = '3306'
 DATABASE = 'HNCTF'
 
