@@ -48,6 +48,7 @@ class Team(db.Model):
     __talename__ = 'team'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)     #团队id
     teamname = db.Column(db.String(100), nullable=True)     # 队伍名
+    teamflag = db.Column(db.String(10),nullable=True)    #审核flag标记
     school_team_id = db.Column(db.Integer, db.ForeignKey('school.id'))
     teacher_team_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 

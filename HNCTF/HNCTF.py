@@ -14,7 +14,10 @@ app.config.from_object(config)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 db.init_app(app)
+#config
 admin = u'1'
+teamflagTrue = u'1'
+teamflagFlase = u'0'
 Toexcel = Toexcel()
 
 @app.route('/')
@@ -201,22 +204,25 @@ def admin_allmessage():
     if g.teacher_id:
         teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
         if teacher.teacheradmin == admin:
-            members = Member.query.order_by('team_member_id').all()
+            members = Member.query.filter().order_by('team_member_id').all()
+
+            memberss=[]
             teamslist=[]     #统计成员
             teacherlist = []  # 统计老师
             schoollist = []  # 统计学校
             for member in members:
-                if member.team_member_id not in teamslist:
+                if member.team_member_id not in teamslist and member.Member_team.teamflag==teamflagTrue and member.Member_teacher.teacherflag==u'1'  :
                     teamslist.append(member.team_member_id)
+                    memberss.append(member)
                 else:pass
-                if member.teacher_member_id  not in teacherlist:
+                if member.teacher_member_id not in teacherlist and member.Member_team.teamflag==teamflagTrue and member.Member_teacher.teacherflag==u'1' :
                     teacherlist.append(member.teacher_member_id)
                 else:pass
-                if member.school_member_id not in schoollist:
+                if member.school_member_id not in schoollist and member.Member_team.teamflag==teamflagTrue and member.Member_teacher.teacherflag==u'1' :
                     schoollist.append(member.school_member_id)
                 else:pass
             Toexcel.all_school_excel()    #审核过后的人员提交队伍信息
-            return render_template('AdminAllMessage.html',members=members, teamslist=teamslist,teacherlist=teacherlist,schoollist=schoollist)
+            return render_template('AdminAllMessage.html',members=memberss, teamslist=teamslist,teacherlist=teacherlist,schoollist=schoollist)
         else:
             return redirect(url_for('Login'))#
     else:
@@ -333,6 +339,43 @@ def dele():
             return redirect(url_for('team',id=member.team_member_id))
     return redirect(url_for('Index'))
 
+#审核队伍
+@app.route('/Admin/TeamMessage/',methods=['POST','GET'])
+def AdminTeamMessage():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacheradmin == admin:
+            if request.method=='POST':
+                teamid = request.form.get('teamid')
+                team = Team.query.filter(Team.id==teamid).first()
+                team.teamflag = teamflagTrue
+                db.session.commit()
+                return redirect(url_for('AdminTeamMessage'))
+            else:
+                teams = Team.query.order_by('school_team_id').all()
+                return render_template('TeamMessage.html',teams = teams)
+
+        else:
+            return redirect(url_for('Index'))  #
+    else:
+        return redirect(url_for('Login'))#
+
+#审核队伍未通过
+@app.route('/Admin/TeamMessageFlag/',methods=['POST'])
+def AdminTeamMessageFlag():
+    if g.teacher_id:
+        teacher = Teacher.query.filter(Teacher.id == g.teacher_id).first()
+        if teacher.teacheradmin == admin:
+            if request.method=='POST':
+                teamid = request.form.get('teamid')
+                team = Team.query.filter(Team.id==teamid).first()
+                team.teamflag = teamflagFlase
+                db.session.commit()
+                return redirect(url_for('AdminTeamMessage'))
+        else:
+            return redirect(url_for('Index'))  #
+    else:
+        return redirect(url_for('Login'))#
 
 #添加学校模块，查询学校是否被添加到school表中
 
